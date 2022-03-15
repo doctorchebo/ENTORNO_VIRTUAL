@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'empate_index' %}">Empate</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'empate_list' %}">Lista de Empate</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Lista de Contratos</li>
+    </ol>
+</nav>
+<h1 class="display-6">Lista de contratos</h1>
+{% include 'messages.html' %}
+<!-- Info del cliente -->
+{% if detalles_desembolso != 0 %}
+<div class='row mb-12'>
+    <div class='col-md-2'>
+        {{form.codigo_cliente|as_crispy_field}}
+    </div>
+    <div class='col-md-2'>
+        {{form.operacion|as_crispy_field}}
+    </div>
+    <div class='col-md-2'>
+        {{form.onbase|as_crispy_field}}
+    </div>
+    <div class='col-md-3'>
+        {{form.cliente|as_crispy_field}}
+    </div>
+</div>
+{% endif %}
+<!-- Filtro -->
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method=GET action="">
+            {% csrf_token %}
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div>
+<table class="table">
+    <thead class = "thead-light">
+        <tr>
+            <th># Testimonio</th>
+            <th>Ubicación</th>
+            <th>Estado</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contrato in contratos_list|slice:"100" %}
+        <tr>
+            <td>{{contrato.num_testimonio}}</td>
+            <td>{{contrato.ubicacion}}</td>
+            <td>{{contrato.estado}}</td>
+            <td>
+                <a href="{% url 'contrato_update_empate' contrato.id %}?next={% url 'contratos_list_empate' form.instance.pk %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <form action="{% url 'contrato_delete_empate' contrato.id %}?next={% url 'contratos_list_empate' form.instance.pk %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<table>
+    <thead>
+        <td></td>
+    </thead>
+
+    <body>
+        <tr>
+            <td>
+                <a href="{% url 'contrato_insert_empate' form.instance.pk 0 %}?next={% url 'contratos_list_empate' form.instance.pk %}" class="btn btn-outline-success">
+                    Añadir Contrato
+                </a>
+            </td>
+        </tr>
+    </body>
+</table>
+{% endblock content %}

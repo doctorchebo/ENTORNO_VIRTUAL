@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'empate_index' %}">Empate</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Lista de Empate</li>
+    </ol>
+</nav>
+<h1 class="display-6">Mis Empates</h1>
+{% include 'messages.html' %}
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i></i></button>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Onbase</th>
+            <th>Operación</th>
+            <th>Nombre</th>
+            <th>Caja</th>
+            <th>Fecha de Empate</th>
+            <th>Estado</th>
+            <th>Contratos</th>
+            <th>Garantías</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for empate in empate_list|slice:"100" %}
+        <tr>
+            <td>{{empate.distribucion.desembolso.onbase}}</td>
+            <td>{{empate.distribucion.desembolso.operacion}}</td>
+            <td>{{empate.distribucion.desembolso.cliente}}</td>
+            <td>{{empate.caja}}</td>
+            <td>{{empate.fecha_modificacion|date:'d/m/Y H:i'}}</td>
+            <td>{{empate.estado}}</td>
+            <td>
+                <a href="{% url 'contratos_list_empate' empate.distribucion.desembolso.id %}" class="btn btn-outline-info">
+                    <i class="fa-solid fa-eye"></i>
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'garantias_list_empate' empate.distribucion.desembolso.id %}" class="btn btn-outline-info">
+                    <i class="fa-solid fa-eye"></i>
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'empate_update' empate.id empate.distribucion.desembolso.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <form action="{% url 'empate_delete' empate.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

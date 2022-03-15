@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'servicios_index' %}">Servicios</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Lista de Aperturas</li>
+    </ol>
+</nav>
+<h1 class="display-6">Lista de Aperturas de Cuenta</h1>
+{% include 'messages.html' %}
+<!---------------------- importar archivo ----------------------->
+<div class="row mb-12">
+    <div class="col-md-2">
+        <a href="{% url 'apertura_insert' %}" class="btn btn-outline-success">
+            Crear Apertura
+        </a>
+    </div>
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" id="documento" name="xlsxfile">
+            <button class="btn btn-outline-success" type="submit" id="subir_archivo"><i class="fa-solid fa-upload"></i></button>
+        </form>
+    </div>
+</div>
+<!------------------------------------------------------------------>
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Código Cliente</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Cuenta</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Caja</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for apertura in apertura_list|slice:"100" %}
+        <tr>
+            <td>{{apertura.codigo_cliente}}</td>
+            <td>{{apertura.cliente}}</td>
+            <td>{{apertura.cuenta}}</td>
+            <td>{{apertura.estado}}</td>
+            <td>{{apertura.caja}}</td>>
+            <td>
+                <a href="{% url 'apertura_update' apertura.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <form action="{% url 'apertura_delete' apertura.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
+
+{% block javascript %}
+    <script>
+        $(document).ready(function () {
+            $('#subir_archivo').hide();
+        });
+        $('#documento').change(function () {
+            $('#subir_archivo').show();
+        });
+    </script>
+{% endblock %}

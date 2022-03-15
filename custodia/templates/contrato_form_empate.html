@@ -1,0 +1,841 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% include 'messages.html' %}
+{% if desembolso_id != 0 and contrato_id == 0 %} 
+<h1 class="display-6">Crear Contrato</h1>
+<!-- Se crea un contrato con o sin un desembolso vinculado -->
+<!-- El desembolso NO está asignado y de  modificarse (usar ContratoCrearForm) -->
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.desembolso|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.ubicacion|as_crispy_field}}
+        </div>
+    </div>
+    <table>
+        <thead class="thead-light">
+            <th>Documento</th>
+            <th>Cantidad</th>
+            <th>Estado</th>
+            <th>Número</th>
+            <th>Regularización</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{form.adenda|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.minuta|as_crispy_field}}</td>
+                <td>{{form.cantidad_minuta|as_crispy_field}}</td>
+                <td>{{form.estado_minuta|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.testimonio|as_crispy_field}}</td>
+                <td>{{form.cantidad_testimonio|as_crispy_field}}</td>
+                <td>{{form.estado_testimonio|as_crispy_field}}</td>
+                <td>{{form.num_testimonio|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.contrato_privado|as_crispy_field}}</td>
+                <td>{{form.cantidad_contrato|as_crispy_field}}</td>
+                <td>{{form.estado_contrato|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.rec_firmas|as_crispy_field}}</td>
+                <td>{{form.cantidad_rec_firmas|as_crispy_field}}</td>
+                <td>{{form.estado_rec_firmas|as_crispy_field}}</td>
+                <td>{{form.num_rec_firmas|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.cert_tdr|as_crispy_field}}</td>
+                <td>{{form.cantidad_cert_tdr|as_crispy_field}}</td>
+                <td>{{form.estado_cert_tdr|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.cert_desgravamen|as_crispy_field}}</td>
+                <td>{{form.cantidad_cert_desgravamen|as_crispy_field}}</td>
+                <td>{{form.estado_cert_desgravamen|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.seguro_cesantia|as_crispy_field}}</td>
+                <td>{{form.cantidad_seguro_cesantia|as_crispy_field}}</td>
+                <td>{{form.estado_seguro_cesantia|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.seguro_dima|as_crispy_field}}</td>
+                <td>{{form.cantidad_seguro_dima|as_crispy_field}}</td>
+                <td>{{form.estado_seguro_dima|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.anexos_seguros|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.cert_gravamen|as_crispy_field}}</td>
+                <td>{{form.cantidad_cert_gravamen|as_crispy_field}}</td>
+                <td>{{form.estado_cert_gravamen|as_crispy_field}}</td>
+                <td>{{form.glosa_cert_gravamen|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.cert_fundempresa|as_crispy_field}}</td>
+                <td>{{form.cantidad_cert_fundempresa|as_crispy_field}}</td>
+                <td>{{form.estado_cert_fundempresa|as_crispy_field}}</td>
+                <td>{{form.glosa_cert_fundempresa|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.folio|as_crispy_field}}</td>
+                <td>{{form.cantidad_folio|as_crispy_field}}</td>
+                <td>{{form.estado_folio|as_crispy_field}}</td>
+                <td>{{form.glosa_folio|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.inf_rapido|as_crispy_field}}</td>
+                <td>{{form.cantidad_inf_rapido|as_crispy_field}}</td>
+                <td>{{form.estado_inf_rapido|as_crispy_field}}</td>
+                <td>{{form.glosa_inf_rapido|as_crispy_field}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.notas|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-100'>
+            {{form.conformidad|as_crispy_field}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success">Registrar</button>
+        </div>
+        <div class="col-md-1">
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-outline-secondary">
+                Retornar a lista
+            </a>
+        </div>
+    </div>
+</form>
+
+{% elif contrato_id != 0 %}
+<!-- Se edita el contrato o se crea uno que ya está vinculado con un desembolso -->
+<!-- El desembolso ya está asignado y no puede modificarse (usar ContratoEditarForm) -->
+<h1 class="display-6">Editar Contrato</h1>
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+    <div class='row mb-12'>
+        <div class='col-md-6'>
+            {{form.desembolso|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.ubicacion|as_crispy_field}}
+        </div>
+    </div>
+    <table>
+        <thead class="thead-light">
+            <th>Documento</th>
+            <th>Cantidad</th>
+            <th>Estado</th>
+            <th>Número</th>
+            <th>Regularización</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{form.adenda|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.minuta|as_crispy_field}}</td>
+                <td>{{form.cantidad_minuta|as_crispy_field}}</td>
+                <td>{{form.estado_minuta|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.testimonio|as_crispy_field}}</td>
+                <td>{{form.cantidad_testimonio|as_crispy_field}}</td>
+                <td>{{form.estado_testimonio|as_crispy_field}}</td>
+                <td>{{form.num_testimonio|as_crispy_field}}</td>
+                <td>{{form.reg_testimonio|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.contrato_privado|as_crispy_field}}</td>
+                <td>{{form.cantidad_contrato|as_crispy_field}}</td>
+                <td>{{form.estado_contrato|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.rec_firmas|as_crispy_field}}</td>
+                <td>{{form.cantidad_rec_firmas|as_crispy_field}}</td>
+                <td>{{form.estado_rec_firmas|as_crispy_field}}</td>
+                <td>{{form.num_rec_firmas|as_crispy_field}}</td>
+                <td>{{form.reg_rec_firmas|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.cert_tdr|as_crispy_field}}</td>
+                <td>{{form.cantidad_cert_tdr|as_crispy_field}}</td>
+                <td>{{form.estado_cert_tdr|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.cert_desgravamen|as_crispy_field}}</td>
+                <td>{{form.cantidad_cert_desgravamen|as_crispy_field}}</td>
+                <td>{{form.estado_cert_desgravamen|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.seguro_cesantia|as_crispy_field}}</td>
+                <td>{{form.cantidad_seguro_cesantia|as_crispy_field}}</td>
+                <td>{{form.estado_seguro_cesantia|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.seguro_dima|as_crispy_field}}</td>
+                <td>{{form.cantidad_seguro_dima|as_crispy_field}}</td>
+                <td>{{form.estado_seguro_dima|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.anexos_seguros|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.cert_gravamen|as_crispy_field}}</td>
+                <td>{{form.cantidad_cert_gravamen|as_crispy_field}}</td>
+                <td>{{form.estado_cert_gravamen|as_crispy_field}}</td>
+                <td>{{form.glosa_cert_gravamen|as_crispy_field}}</td>
+                <td>{{form.reg_cert_gravamen|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.cert_fundempresa|as_crispy_field}}</td>
+                <td>{{form.cantidad_cert_fundempresa|as_crispy_field}}</td>
+                <td>{{form.estado_cert_fundempresa|as_crispy_field}}</td>
+                <td>{{form.glosa_cert_fundempresa|as_crispy_field}}</td>
+                <td>{{form.reg_cert_fundempresa|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.folio|as_crispy_field}}</td>
+                <td>{{form.cantidad_folio|as_crispy_field}}</td>
+                <td>{{form.estado_folio|as_crispy_field}}</td>
+                <td>{{form.glosa_folio|as_crispy_field}}</td>
+                <td>{{form.reg_folio|as_crispy_field}}</td>
+            </tr>
+            <tr>
+                <td>{{form.inf_rapido|as_crispy_field}}</td>
+                <td>{{form.cantidad_inf_rapido|as_crispy_field}}</td>
+                <td>{{form.estado_inf_rapido|as_crispy_field}}</td>
+                <td>{{form.glosa_inf_rapido|as_crispy_field}}</td>
+                <td>{{form.reg_inf_rapido|as_crispy_field}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.notas|as_crispy_field}}
+        </div>
+    </div>
+    <!-- <h3>Confirmación de Recepción</h3> -->
+    <div class='row mb-12'>
+        <div class='col-md-1'>
+            {{form.conformidad|as_crispy_field}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle"></i>Registrar</button>
+        </div>
+        <div class="col-md-2">
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-outline-secondary">
+                Retornar a lista
+            </a>
+        </div>
+    </div>
+</form>
+{% endif %}
+{% endblock content %}
+
+{% block javascript %}
+    <script>
+        
+        $(document).ready(function () {
+            if ($('#id_minuta').is(':checked')) {
+                if ($('#id_cantidad_minuta').val() != "") {
+                    $('#id_cantidad_minuta').show()
+                    $('#id_estado_minuta').show()
+                }
+            } else {
+                $('#id_cantidad_minuta').hide()
+                $('#id_estado_minuta').hide()
+            }
+
+            if ($('#id_testimonio').is(':checked')) {
+                if ($('#id_cantidad_testimonio').val() != "") {
+                    $('#id_cantidad_testimonio').show()
+                    $('#id_estado_testimonio').show()
+                    $('#id_num_testimonio').show()
+                    $('#id_reg_testimonio').show()
+                }
+            } else {
+                $('#id_cantidad_testimonio').hide()
+                $('#id_estado_testimonio').hide()
+                $('#id_num_testimonio').hide()
+                $('#id_reg_testimonio').hide()
+            }
+
+            if ($('#id_contrato_contrato').is(':checked')) {
+                if ($('#id_cantidad_contrato').val() != "") {
+                    $('#id_cantidad_contrato').show()
+                    $('#id_estado_contrato').show()
+                }
+            } else {
+                $('#id_cantidad_contrato').hide()
+                $('#id_estado_contrato').hide()
+            }
+
+            if ($('#id_rec_firmas').is(':checked')) {
+                if ($('#id_cantidad_rec_firmas').val() != "") {
+                    $('#id_cantidad_rec_firmas').show()
+                    $('#id_estado_rec_firmas').show()
+                    $('#id_num_rec_firmas').show()
+                    $('#id_reg_rec_firmas').show()
+                }
+            } else {
+                $('#id_cantidad_rec_firmas').hide()
+                $('#id_estado_rec_firmas').hide()
+                $('#id_num_rec_firmas').hide()
+                $('#id_reg_rec_firmas').hide()
+            }
+
+            if ($('#id_cert_tdr').is(':checked')) {
+                if ($('#id_cantidad_cert_tdr').val() != "") {
+                    $('#id_cantidad_cert_tdr').show()
+                    $('#id_estado_cert_tdr').show()
+                }
+            } else {
+                $('#id_cantidad_cert_tdr').hide()
+                $('#id_estado_cert_tdr').hide()
+            }
+
+            if ($('#id_cert_desgravamen').is(':checked')) {
+                if ($('#id_cantidad_cert_desgravamen').val() != "") {
+                    $('#id_cantidad_cert_desgravamen').show()
+                    $('#id_estado_cert_desgravamen').show()
+                }
+            } else {
+                $('#id_cantidad_cert_desgravamen').hide()
+                $('#id_estado_cert_desgravamen').hide()
+            }
+
+            if ($('#id_seguro_cesantia').is(':checked')) {
+                if ($('#id_cantidad_seguro_cesantia').val() != "") {
+                    $('#id_cantidad_seguro_cesantia').show()
+                    $('#id_estado_seguro_cesantia').show()
+                }
+            } else {
+                $('#id_cantidad_seguro_cesantia').hide()
+                $('#id_estado_seguro_cesantia').hide()
+            }
+
+            if ($('#id_seguro_dima').is(':checked')) {
+                if ($('#id_cantidad_seguro_dima').val() != "") {
+                    $('#id_cantidad_seguro_dima').show()
+                    $('#id_estado_seguro_dima').show()
+                }
+            } else {
+                $('#id_cantidad_seguro_dima').hide()
+                $('#id_estado_seguro_dima').hide()
+            }
+
+            if ($('#id_cert_gravamen').is(':checked')) {
+                if ($('#id_cantidad_cert_gravamen').val() != "") {
+                    $('#id_cantidad_cert_gravamen').show()
+                    $('#id_estado_cert_gravamen').show()
+                    $('#id_glosa_cert_gravamen').show()
+                    $('#id_reg_cert_gravamen').show()
+
+                }
+            } else {
+                $('#id_cantidad_cert_gravamen').hide()
+                $('#id_estado_cert_gravamen').hide()
+                $('#id_glosa_cert_gravamen').hide()
+                $('#id_reg_cert_gravamen').hide()
+                
+            }
+
+            if ($('#id_cert_fundempresa').is(':checked')) {
+                if ($('#id_cantidad_cert_fundempresa').val() != "") {
+                    $('#id_cantidad_cert_fundempresa').show()
+                    $('#id_estado_cert_fundempresa').show()
+                    $('#id_glosa_cert_fundempresa').show()
+                    $('#id_reg_cert_fundempresa').show()
+                }
+            } else {
+                $('#id_cantidad_cert_fundempresa').hide()
+                $('#id_estado_cert_fundempresa').hide()
+                $('#id_glosa_cert_fundempresa').hide()
+                $('#id_reg_cert_fundempresa').hide()
+            }
+
+            if ($('#id_folio').is(':checked')) {
+                if ($('#id_cantidad_folio').val() != "") {
+                    $('#id_cantidad_folio').show()
+                    $('#id_estado_folio').show()
+                    $('#id_glosa_folio').show()
+                    $('#id_reg_folio').show()
+                }
+            } else {
+                $('#id_cantidad_folio').hide()
+                $('#id_estado_folio').hide()
+                $('#id_glosa_folio').hide()
+                $('#id_reg_folio').hide()
+            }
+
+            if ($('#id_inf_rapido').is(':checked')) {
+                if ($('#id_cantidad_inf_rapido').val() != "") {
+                    $('#id_cantidad_inf_rapido').show()
+                    $('#id_estado_inf_rapido').show()
+                    $('#id_glosa_inf_rapido').show()
+                    $('#id_reg_inf_rapido').show()
+                }
+            } else {
+                $('#id_cantidad_inf_rapido').hide()
+                $('#id_estado_inf_rapido').hide()
+                $('#id_glosa_inf_rapido').hide()
+                $('#id_reg_inf_rapido').hide()
+            }
+
+        })
+
+        $('#id_minuta').change(function () {
+            if ($('#id_minuta').is(':checked')) {
+                $('#id_cantidad_minuta').show()
+            } else {
+                $('#id_cantidad_minuta').val("").hide()
+                $('#id_estado_minuta').val("").hide()
+
+            }
+        })
+
+        $('#id_cantidad_minuta').change(function () {
+            let cantidad = $(this).val()
+
+            if (cantidad != "") {
+                $('#id_estado_minuta').show()
+            } else {
+                $('#id_estado_minuta').hide()
+            }
+
+            $.ajax({
+                url: "{% url 'cantidad_contrato' %}",
+                method: 'GET',
+                data: {
+                    'cantidad': cantidad
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#id_estado_minuta").html(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+
+        $('#id_testimonio').change(function () {
+            if ($('#id_testimonio').is(':checked')) {
+                $('#id_cantidad_testimonio').show()
+                $('#id_num_testimonio').show()
+                $('#id_reg_testimonio').show()
+            } else {
+                $('#id_cantidad_testimonio').val("").hide()
+                $('#id_estado_testimonio').val("").hide()
+                $('#id_num_testimonio').val("").hide()
+                $('#id_reg_testimonio').val("").hide()
+            }
+        })
+
+        $('#id_cantidad_testimonio').change(function () {
+            let cantidad = $(this).val()
+
+            if (cantidad != "") {
+                $('#id_estado_testimonio').show()
+            } else {
+                $('#id_estado_testimonio').hide()
+            }
+
+            $.ajax({
+                url: "{% url 'cantidad_contrato' %}",
+                method: 'GET',
+                data: {
+                    'cantidad': cantidad
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#id_estado_testimonio").html(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+
+        $('#id_contrato_privado').change(function () {
+            if ($('#id_contrato_privado').is(':checked')) {
+                $('#id_cantidad_contrato').show()
+            } else {
+                $('#id_cantidad_contrato').val("").hide()
+                $('#id_estado_contrato').val("").hide()
+            }
+        })
+
+        $('#id_cantidad_contrato').change(function () {
+            let cantidad = $(this).val()
+
+            if (cantidad == 1 || cantidad == 2 || cantidad == 3) {
+                $('#id_estado_contrato').show()
+            } else {
+                $('#id_estado_contrato').hide()
+            }
+
+            $.ajax({
+                url: "{% url 'cantidad_contrato' %}",
+                method: 'GET',
+                data: {
+                    'cantidad': cantidad
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#id_estado_contrato").html(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+
+        $('#id_rec_firmas').change(function () {
+            if ($('#id_rec_firmas').is(':checked')) {
+                $('#id_cantidad_rec_firmas').show()
+                $('#id_num_rec_firmas').show()
+                $('#id_reg_rec_firmas').show()
+            } else {
+                $('#id_cantidad_rec_firmas').val("").hide()
+                $('#id_estado_rec_firmas').val("").hide()
+                $('#id_num_rec_firmas').val("").hide()
+                $('#id_reg_rec_firmas').val("").hide()
+            }
+        })
+
+        $('#id_cantidad_rec_firmas').change(function () {
+            let cantidad = $(this).val()
+
+            if (cantidad != "") {
+                $('#id_estado_rec_firmas').show()
+            } else {
+                $('#id_estado_rec_firmas').hide()
+            }
+
+            $.ajax({
+                url: "{% url 'cantidad_contrato' %}",
+                method: 'GET',
+                data: {
+                    'cantidad': cantidad
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#id_estado_rec_firmas").html(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+
+        $('#id_cert_tdr').change(function () {
+            if ($('#id_cert_tdr').is(':checked')) {
+                $('#id_cantidad_cert_tdr').show()
+            } else {
+                $('#id_cantidad_cert_tdr').val("").hide()
+                $('#id_estado_cert_tdr').val("").hide()
+            }
+        })
+
+        $('#id_cantidad_cert_tdr').change(function () {
+            let cantidad = $(this).val()
+
+            if (cantidad != "") {
+                $('#id_estado_cert_tdr').show()
+            } else {
+                $('#id_estado_cert_tdr').hide()
+            }
+
+            $.ajax({
+                url: "{% url 'cantidad_contrato' %}",
+                method: 'GET',
+                data: {
+                    'cantidad': cantidad
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#id_estado_cert_tdr").html(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+
+        $('#id_cert_desgravamen').change(function () {
+            if ($('#id_cert_desgravamen').is(':checked')) {
+                $('#id_cantidad_cert_desgravamen').show()
+            } else {
+                $('#id_cantidad_cert_desgravamen').val("").hide()
+                $('#id_estado_cert_desgravamen').val("").hide()
+            }
+        })
+
+        $('#id_cantidad_cert_desgravamen').change(function () {
+            let cantidad = $(this).val()
+
+            if (cantidad != "") {
+                $('#id_estado_cert_desgravamen').show()
+            } else {
+                $('#id_estado_cert_desgravamen').hide()
+            }
+
+            $.ajax({
+                url: "{% url 'cantidad_contrato' %}",
+                method: 'GET',
+                data: {
+                    'cantidad': cantidad
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#id_estado_cert_desgravamen").html(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+
+        $('#id_seguro_cesantia').change(function () {
+            if ($('#id_seguro_cesantia').is(':checked')) {
+                $('#id_cantidad_seguro_cesantia').show()
+            } else {
+                $('#id_cantidad_seguro_cesantia').val("").hide()
+                $('#id_estado_seguro_cesantia').val("").hide()
+            }
+        })
+
+        $('#id_cantidad_seguro_cesantia').change(function () {
+            let cantidad = $(this).val()
+
+            if (cantidad != "") {
+                $('#id_estado_seguro_cesantia').show()
+            } else {
+                $('#id_estado_seguro_cesantia').hide()
+            }
+
+            $.ajax({
+                url: "{% url 'cantidad_contrato' %}",
+                method: 'GET',
+                data: {
+                    'cantidad': cantidad
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#id_estado_seguro_cesantia").html(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+
+        $('#id_seguro_dima').change(function () {
+            if ($('#id_seguro_dima').is(':checked')) {
+                $('#id_cantidad_seguro_dima').show()
+            } else {
+                $('#id_cantidad_seguro_dima').val("").hide()
+                $('#id_estado_seguro_dima').val("").hide()
+            }
+        })
+
+        $('#id_cantidad_seguro_dima').change(function () {
+            let cantidad = $(this).val()
+
+            if (cantidad != "") {
+                $('#id_estado_seguro_dima').show()
+            } else {
+                $('#id_estado_seguro_dima').hide()
+            }
+
+            $.ajax({
+                url: "{% url 'cantidad_contrato' %}",
+                method: 'GET',
+                data: {
+                    'cantidad': cantidad
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#id_estado_seguro_dima").html(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+
+        $('#id_cert_gravamen').change(function () {
+            if ($('#id_cert_gravamen').is(':checked')) {
+                $('#id_cantidad_cert_gravamen').show()
+                $('#id_glosa_cert_gravamen').show()
+                $('#id_reg_cert_gravamen').show()
+            } else {
+                $('#id_cantidad_cert_gravamen').val("").hide()
+                $('#id_estado_cert_gravamen').val("").hide()
+                $('#id_glosa_cert_gravamen').val("").hide()
+                $('#id_reg_cert_gravamen').val("").hide()
+            }
+        })
+
+        $('#id_cantidad_cert_gravamen').change(function () {
+            let cantidad = $(this).val()
+
+            if (cantidad != "") {
+                $('#id_estado_cert_gravamen').show()
+            } else {
+                $('#id_estado_cert_gravamen').hide()
+            }
+
+            $.ajax({
+                url: "{% url 'cantidad_contrato' %}",
+                method: 'GET',
+                data: {
+                    'cantidad': cantidad
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#id_estado_cert_gravamen").html(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+
+        $('#id_cert_fundempresa').change(function () {
+            if ($('#id_cert_fundempresa').is(':checked')) {
+                $('#id_cantidad_cert_fundempresa').show()
+                $('#id_glosa_cert_fundempresa').show()
+                $('#id_reg_cert_fundempresa').show()
+            } else {
+                $('#id_cantidad_cert_fundempresa').val("").hide()
+                $('#id_estado_cert_fundempresa').val("").hide()
+                $('#id_glosa_cert_fundempresa').val("").hide()
+                $('#id_reg_cert_fundempresa').val("").hide()
+            }
+        })
+
+        $('#id_cantidad_cert_fundempresa').change(function () {
+            let cantidad = $(this).val()
+
+            if (cantidad != "") {
+                $('#id_estado_cert_fundempresa').show()
+            } else {
+                $('#id_estado_cert_fundempresa').hide()
+            }
+
+            $.ajax({
+                url: "{% url 'cantidad_contrato' %}",
+                method: 'GET',
+                data: {
+                    'cantidad': cantidad
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#id_estado_cert_fundempresa").html(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+        $('#id_folio').change(function () {
+            if ($('#id_folio').is(':checked')) {
+                $('#id_cantidad_folio').show()
+                $('#id_glosa_folio').show()
+                $('#id_reg_folio').show()
+            } else {
+                $('#id_cantidad_folio').val("").hide()
+                $('#id_estado_folio').val("").hide()
+                $('#id_glosa_folio').val("").hide()
+                $('#id_reg_folio').val("").hide()
+            }
+        })
+
+        $('#id_cantidad_folio').change(function () {
+            let cantidad = $(this).val()
+
+            if (cantidad == 1 || cantidad == 2 || cantidad == 3) {
+                $('#id_estado_folio').show()
+            } else {
+                $('#id_estado_folio').hide()
+            }
+
+            $.ajax({
+                url: "{% url 'cantidad_contrato' %}",
+                method: 'GET',
+                data: {
+                    'cantidad': cantidad
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#id_estado_folio").html(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+
+        $('#id_inf_rapido').change(function () {
+            if ($('#id_inf_rapido').is(':checked')) {
+                $('#id_cantidad_inf_rapido').show()
+                $('#id_glosa_inf_rapido').show()
+                $('#id_reg_inf_rapido').show()
+            } else {
+                $('#id_cantidad_inf_rapido').val("").hide()
+                $('#id_estado_inf_rapido').val("").hide()
+                $('#id_glosa_inf_rapido').val("").hide()
+                $('#id_reg_inf_rapido').val("").hide()
+            }
+        })
+
+        $('#id_cantidad_inf_rapido').change(function () {
+            let cantidad = $(this).val()
+
+            if (cantidad == 1 || cantidad == 2 || cantidad == 3) {
+                $('#id_estado_inf_rapido').show()
+            } else {
+                $('#id_estado_inf_rapido').hide()
+            }
+
+            $.ajax({
+                url: "{% url 'cantidad_contrato' %}",
+                method: 'GET',
+                data: {
+                    'cantidad': cantidad
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#id_estado_inf_rapido").html(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+
+    </script>
+{% endblock %}

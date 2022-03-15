@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'consultas_index' %}">Consultas</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Reportes</li>
+    </ol>
+</nav>
+<h3>Reportes</h3>
+{% include 'messages.html' %}
+
+<form action="" method='post'>
+    {% csrf_token %}
+    <div class="row md-12">
+        <div class="col-md-3">
+            {{form.reporte|as_crispy_field}}
+        </div>
+        <div class="col-md-2">
+            {{form.caja|as_crispy_field}}
+        </div>
+        
+    </div>
+    <div class="row md-12">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success">Descargar</button>
+        </div>
+    </div>
+</form>
+<br>
+<!-- <div class="list-group">
+    <a href="{% url 'reporte_empate' %}" class="list-group-item list-group-item-action">Empate</a>
+    <a href="{% url 'reporte_contratos' %}" class="list-group-item list-group-item-action">Contratos</a>
+    <a href="{% url 'reporte_aperturas' %}" class="list-group-item list-group-item-action">Aperturas</a>
+    <a href="{% url 'reporte_polizas' %}" class="list-group-item list-group-item-action">Pólizas</a>
+    <a href="{% url 'reporte_documentos_sueltos' %}" class="list-group-item list-group-item-action">Documentos Sueltos</a>
+    <a href="{% url 'reporte_levantamientos' %}" class="list-group-item list-group-item-action">Levantamientos</a>
+</div>     -->
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'levantamiento_index' %}">Levantamientos</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Préstamos</li>
+    </ol>
+</nav>
+<h3>Préstamos de Sobres</h3>
+<div class="row">
+    <div class="col-md-2">
+        <div class="list-group">
+            <a href="{% url 'prestamo_list' %}" class="list-group-item list-group-item-action">Solicitar</a>
+            <a href="{% url 'prestamo_list_archivo' %}" class="list-group-item list-group-item-action">Prestar</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

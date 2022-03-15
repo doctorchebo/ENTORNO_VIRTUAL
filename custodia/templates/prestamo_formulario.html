@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% if prestamo_id == 0 %}
+<h1 class="display-6">Crear Préstamo</h1>
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+    
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.sobre|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.notas|as_crispy_field}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle"></i>Solicitar</button>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'prestamo_list' %}" class="btn btn-outline-secondary">
+                Retornar a lista
+            </a>
+        </div>
+    </div>
+</form>
+<!-- --------------------------------------- editar ----------------------------------------- -->
+{% else %}
+<h1 class="display-6">Editar Préstamo</h1>
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.sobre|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.notas|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.estado|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row'>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle"></i>Registrar</button>
+        </div>
+        <div class="col-md-2">
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-outline-secondary ">
+                Retornar a lista
+            </a>
+        </div>
+    </div>
+</form>
+{% endif %}
+{% endblock content %}

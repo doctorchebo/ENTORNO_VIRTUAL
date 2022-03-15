@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1 class="display-6">Inmueble</h1>
+{% include 'messages.html' %}
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.desembolso|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.escritura_publica|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.folio|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.catastro|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.plano|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.plano_cebolla|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.plano_construccion|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.informe_rapido|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-6'>
+            {{form.observaciones|as_crispy_field}}
+        </div>
+        <div class='col-md-6'>
+            {{form.otros|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.checklist|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.call_center|as_crispy_field}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success">Registrar</button>
+        </div>
+        <div class="col-md-1">
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-outline-secondary ">
+                Retornar a lista
+            </a>
+        </div>
+    </div>
+</form>
+
+{% endblock content %}

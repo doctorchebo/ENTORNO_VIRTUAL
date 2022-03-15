@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="display-4">Lista de Cajas</h1>
+<div class='row mb-12'>
+    <form class="d-flex" method="get" action="{% url 'cajas_list' form.tipo form.caja %}">
+        <div class='col-md-6'>
+            {{form.tipo|as_crispy_field}}
+        </div>
+        <div class='col-md-6'>
+            {{form.caja|as_crispy_field}}
+        </div>
+        <button type="submit" class="btn btn-secondary">
+            <i class="fas fa-search"></i>Buscar
+        </button>
+    </form>
+</div>
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-secondary">
+                <i class="fas fa-search"></i>Buscar
+            </button>
+        </form>
+    </div>
+</div>
+<table class="table table-borderless">
+    <thead>
+        <tr>
+            <td>Código Cliente</td>
+            <td>Nombre</td>
+            <td>Caja</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in item_list|slice:"100" %}
+        <tr>
+            <td>{{item.distribucion.desembolso.codigo_cliente}}</td>
+            <td>{{item.distribucion.desembolso.codigo_cliente}}</td>
+            <td>{{item.numero_caja}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

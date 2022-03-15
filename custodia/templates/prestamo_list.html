@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'levantamiento_index' %}">Levantamientos</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'prestamo_index' %}">Préstamos</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Lista de Solicitudes</li>
+    </ol>
+</nav>
+<h1 class="display-6">Mis Solicitudes</h1>
+{% include 'messages.html' %}
+
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <a href="{% url 'prestamo_insert' %}" class="btn btn-outline-success">
+            Añadir Préstamo
+        </a>
+    </div>
+</div>
+<br>
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Código Sobre</th>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Solicitante</th>
+            <th>Fecha Solicitud</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for prestamo in prestamo_list|slice:"100" %}
+        <tr>
+            <td>{% for x in prestamo.sobre.all  %}
+                    <li>{{x.codigo}}</li>
+                {% endfor %}
+            </td>
+            <td>{% for x in prestamo.sobre.all %}
+                    <li>{{x.nombre}}</li>
+                {% endfor %}
+            </td>
+            <td>{{prestamo.estado}}</td>
+            <td>{{prestamo.usuario_solicitante}}</td>
+            <td>{{prestamo.fecha_creacion|date:'d/m/Y H:i'}}</td>
+            <td>
+                <a href="{% url 'prestamo_update' prestamo.id %}"
+                    class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <form action="{% url 'prestamo_delete' prestamo.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

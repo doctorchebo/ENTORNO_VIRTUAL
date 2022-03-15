@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for item in items_observacion %}
+<option value="{{ item.pk }}">{{ item.nombre }}</option>
+{% endfor %}

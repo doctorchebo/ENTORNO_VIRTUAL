@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Correspondencia</li>
+    </ol>
+</nav>
+<h3>Módulo de Correspondencia</h3>
+{% include 'messages.html' %}
+<div class="list-group">
+    <a href="{% url 'correspondencia_list' %}" class="list-group-item list-group-item-action">Enviar</a>
+    <a href="{% url 'correspondencia_list_recibido' %}" class="list-group-item list-group-item-action">Recibir</a>
+</div>    
+{% endblock %}

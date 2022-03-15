@@ -1,0 +1,396 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Hoja Resumen</li>
+    </ol>
+</nav>
+<h1 class="display-6">Hoja Resumen</h1>
+{% include 'messages.html' %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.codigo_cliente|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.onbase|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.operacion|as_crispy_field}}
+        </div>
+        <div class='col-md-4'>
+            {{form.cliente|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            <button type="submit" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </div>
+</form>
+
+{% if request.method == 'POST' %}
+<!-- <div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Desembolsos</h3>
+        <div class="d-inline-flex">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Código Cliente</th>
+                        <th>Onbase</th>
+                        <th>Operacion</th>
+                        <th>Cliente</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for desembolso in desembolsos %}
+                    <tr>
+                        <td>{{desembolso.codigo_cliente}}</td>
+                        <td>{{desembolso.onbase}}</td>
+                        <td>{{desembolso.operacion}}</td>
+                        <td>{{desembolso.cliente}}</td>
+                        <td>{{desembolso.estado}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6" >
+        <h3>Contratos</h3>
+        <div class="d-inline-flex">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Nº testimonio</th>
+                        <th>Ubicación</th>
+                        <th>Fecha Modificación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contrato in contratos %}
+                    <tr>
+                        <td>{{contrato.num_testimonio}}</td>
+                        <td>{{contrato.ubicacion}}</td>
+                        <td>{{empate.fecha_modificacion|date:'d/m/Y H:i'}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h3>Distribuciones</h3>
+        <div class="d-inline-flex">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Tipo de Operación</th>
+                        <th>Analista Asignado</th>
+                        <th>Fecha distribución</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for distribucion in distribuciones %}
+                    <tr>
+                        <td>{{distribucion.tipo.nombre}}</td>
+                        <td>{{distribucion.analista_asignado.nombre}}</td>
+                        <td>{{distribucion.fecha_modificacion|date:'d/m/Y H:i'}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h3>Empates</h3>
+        <div class="d-inline-flex">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Caja</th>
+                        <th>Empatado</th>
+                        <th>Tiempo Empate</th>
+                        <th>Nº observaciones</th>
+                        <th>Fecha Modificación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for empate in empates %}
+                    <tr>
+                        <td>{{empate.caja}}</td>
+                        <td>{{empate.empatado}}</td>
+                        <td>{{empate.tiempo_empate}}</td>
+                        <td>{{empate.observaciones_count}}</td>
+                        <td>{{empate.fecha_modificacion|date:'d/m/Y H:i'}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h3>Observaciones</h3>
+        <div class="d-inline-flex">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Destino</th>
+                        <th>Categoría</th>
+                        <th>Sub Categoría</th>
+                        <th>Observación</th>
+                        <th>Glosa</th>
+                        <th>Estado</th>
+                        <th>Fecha modificación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for observacion in observaciones %}
+                    <tr>
+                        <td>{{observacion.destino}}</td>
+                        <td>{{observacion.categoria.nombre}}</td>
+                        <td>{{observacion.sub_categoria.nombre}}</td>
+                        <td>{{observacion.observacion.nombre}}</td>
+                        <td>{{observacion.glosa}}</td>
+                        <td>{{observacion.estado}}</td>
+                        <td>{{observacion.fecha_modificacion|date:'d/m/Y H:i'}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div> 
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h3>Garantías</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h5>Inmubles</h5>
+        <div class="d-inline-flex">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Escritura Pública</th>
+                        <th>Folio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inmueble in inmuebles %}
+                    <tr>
+                        <td>{{inmueble.escritura_publica}}</td>
+                        <td>{{inmueble.folio}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h5>Vehículos</h6>
+        <div class="d-inline-flex">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Crpva</th>
+                        <th>Placa</th>
+                    </tr>
+                </thead>
+            
+                <body>
+                    {% for vehiculo in vehiculos %}
+                    <tr>
+                        <td>{{vehiculo.crpva}}</td>
+                        <td>{{vehiculo.placa}}</td>
+                    </tr>
+                    {% endfor %}
+                </body>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Levantamientos</h3>
+        <div class="d-inline-flex">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for levantamiento in levantamientos %}
+                    <tr>
+                        <td>{{contrato.estado}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h3>Aperturas</h3>
+        <div class="d-inline-flex">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Cuenta</th>
+                        <th>Estado</th>
+                        <th>Sobre</th>
+                        <th>Bloque</th>
+                        <th>Caja</th>
+                        <th>Fecha creación</th>
+                        <th>Fecha modificación</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for apertura in aperturas %}
+                    <tr>
+            
+                        <td>{{apertura.cuenta}}</td>
+                        <td>{{apertura.estado}}</td>
+                        <td>{{apertura.sobre}}</td>
+                        <td>{{apertura.bloque}}</td>
+                        <td>{{apertura.caja}}</td>
+                        <td>{{apertura.fecha_creacion|date:'d/m/Y H:i'}}</td>
+                        <td>{{apertura.fecha_modificacion|date:'d/m/Y H:i'}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <h3>Pólizas</h3>
+        <div class="d-inline-flex">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Cuenta</th>
+                        <th>Estado</th>
+                        <th>Sobre</th>
+                        <th>Bloque</th>
+                        <th>Caja</th>
+                        <th>Fecha creación</th>
+                        <th>Fecha modificación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for poliza in polizas %}
+                    <tr>
+                        <td>{{poliza.poliza}}</td>
+                        <td>{{poliza.estado}}</td>
+                        <td>{{poliza.sobre}}</td>
+                        <td>{{poliza.bloque}}</td>
+                        <td>{{poliza.caja}}</td>
+                        <td>{{poliza.fecha_creacion|date:'d/m/Y H:i'}}</td>
+                        <td>{{poliza.fecha_modificacion|date:'d/m/Y H:i'}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <h3>Documentos Sueltos</h3>
+        <div class="d-inline-flex">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Sobre</th>
+                        <th>Bloque</th>
+                        <th>Caja</th>
+                        <th>Fecha creación</th>
+                        <th>Fecha modificación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for documento_suelto in documentos_sueltos %}
+                    <tr>
+                        <td>{{documento_suelto.descripcion}}</td>
+                        <td>{{documento_suelto.estado}}</td>
+                        <td>{{documento_suelto.sobre}}</td>
+                        <td>{{documento_suelto.bloque}}</td>
+                        <td>{{documento_suelto.caja}}</td>
+                        <td>{{documento_suelto.fecha_creacion|date:'d/m/Y H:i'}}</td>
+                        <td>{{documento_suelto.fecha_modificacion|date:'d/m/Y H:i'}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock content %}
+
+{% block javascript %}
+    <script>
+        $('#id_codigo_cliente').keypress(function(){
+            if($(this).val().length > 1){
+                $('#id_onbase').val("")
+                $('#id_operacion').val("")
+                $('#id_cliente').val("")
+            }
+        })
+        $('#id_onbase').keypress(function () {
+               if ($(this).val().length > 1) {
+                $('#id_codigo_cliente').val("")
+                $('#id_operacion').val("")
+                $('#id_cliente').val("")
+            }
+            })
+        $('#id_operacion').keypress(function () {
+                if ($(this).val().length > 1) {
+                $('#id_codigo_cliente').val("")
+                $('#id_onbase').val("")
+                $('#id_cliente').val("")
+            }
+            })
+        $('#id_cliente').keypress(function () {
+                if ($(this).val().length > 1) {
+                $('#id_codigo_cliente').val("")
+                $('#id_onbase').val("")
+                $('#id_operacion').val("")
+                
+            }
+            })
+        
+    </script>
+
+{% endblock  %}

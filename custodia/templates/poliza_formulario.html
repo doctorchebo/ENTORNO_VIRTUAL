@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% if poliza_id == 0 %}
+<h1 class="display-4">Crear Póliza</h1>
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{caja_form.caja|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.sobre|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.caja|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.bloque|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.poliza|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.estado|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.codigo_cliente|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.identificacion|as_crispy_field}}
+        </div>
+        <div class='col-md-6'>
+            {{form.cliente|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.cuenta|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.tarjeta|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.sucursal|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.observaciones|as_crispy_field}}
+        </div>
+    </div>
+
+    
+    <div class="row mb-12">
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-success"><i class="fas fa-check-circle"></i>Registrar</button>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'poliza_list' %}" class="btn btn-secondary btn-block btn-lg">
+                Retornar a lista
+            </a>
+        </div>
+    </div>
+</form>
+<!-- ---------------------------Editar póliza---------------------------- -->
+{% else %}
+<h1 class="display-4">Editar Póliza</h1>
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{caja_form.caja|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.sobre|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.caja|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.bloque|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.poliza|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.usuario_creacion|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.codigo_cliente|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.identificacion|as_crispy_field}}
+        </div>
+        <div class='col-md-6'>
+            {{form.cliente|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.cuenta|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.tarjeta|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.sucursal|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.observaciones|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.estado|as_crispy_field}}
+        </div>
+    </div>
+
+    <div class="row mb-12">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success">Registrar</button>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'poliza_list' %}" class="btn btn-outline-secondary">
+                Retornar a lista
+            </a>
+        </div>
+    </div>
+</form>
+
+{% endif %}
+{% endblock content %}

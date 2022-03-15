@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% include 'messages.html' %}
+{%  if distribucion_id == 0 %}
+<h1 class="display-6">Crear Distribución</h1>
+<div class="row md-6">
+    <div class="col-md-4">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Analista</th>
+                    <th>Tiempo Restante</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for empatador in empatadores %}
+                <tr>
+                    <td>{{empatador.analista_asignado.nombre}}</td>
+                    <td>{{empatador.tiempo}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+
+    <div class='row mb-10'>
+        <div class='col-md-6'>
+            {{form.desembolso|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-10'>
+        <div class='col-md-2'>
+            <a class="btn btn-outline-success" href="{% url 'desestimada_insert' %}">Crear Desestimada</a>
+        </div>
+    </div>
+    <br>
+    <div class='row mb-10'>
+        <div class='col-md-3' id="asignar_auto">
+            {{form.tipo|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-10'>
+        <div class='col-md-3'>
+            <input type="checkbox" id="distr_auto_id">Distribución Automática</input>
+        </div>
+    </div>  
+    <br>
+    <div class='row mb-10'>
+        <div class='col-md-3' id = "empatador_asignado_id">
+            {{form.analista_asignado|as_crispy_field}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle"></i>Registrar</button>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'distribucion_list' %}" class="btn btn-outline-secondary">
+                Retornar a lista
+            </a>
+        </div>
+
+    </div>
+</form>
+<!-- ----------------------------------Editar Distribución----------------------------------- -->
+{% else %}
+<h1 class="display-6">Editar Distribución</h1>
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+
+    <div class='row mb-10'>
+        <div class='col-md-2'>
+            {{form.usuario_creacion|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-10'>
+        <div class='col-md-10'>
+            {{form.desembolso|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-10'>
+        <div class='col-md-3'>
+            {{form.tipo|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-10'>
+        <div class='col-md-3'>
+            {{form.analista_asignado|as_crispy_field}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle"></i>Registrar</button>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'distribucion_list' %}" class="btn btn-outline-secondary">
+                Retornar a lista
+            </a>
+        </div>
+
+    </div>
+</form>
+
+{% endif %}
+
+{% endblock content %}
+    
+{% block javascript %}
+    <script>
+        // function validate(){
+        //     if (document.getElementById('distr_auto_id').checked) {
+        //         console.log('check');
+        //     }
+        // }
+        $(document).ready(function () {
+                //using jQuery code
+                $('#distr_auto_id').on('change', function (e) {
+                    if (e.currentTarget.checked) {
+                        // $('#empatador_asignado_id').hide()
+
+                        $.ajax({
+                            url: "{% url 'asignar_analista_automatico' %}",
+                            method: 'GET',
+                            data: {
+                                'tipo':$('#id_tipo').val()
+                            },
+                            success: function(data){
+                                console.log(data)
+                                $('#id_analista_asignado').val(data.id).change();
+                            },
+                            error: function(error){
+                                console.log(error)
+                            }
+                        })
+
+                    } else {
+                        $('#empatador_asignado_id').show()    
+                    }
+                })
+            })
+    </script>
+{% endblock %}

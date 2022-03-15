@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1 class="display-6">Sobres</h1>
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.codigo|as_crispy_field}}
+        </div>
+        <div class='col-md-6'>
+            {{form.nombre|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.desembolso|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.estado|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.ubicacion|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.observaciones|as_crispy_field}}
+        </div>
+    </div>
+
+    <div class="row mb-12">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success">Registrar</button>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'sobre_list' %}" class="btn btn-outline-secondary">
+                Retornar a lista
+            </a>
+        </div>
+    </div>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% if user.is_authenticated %}
+    {% block content %}
+    <h3>Sistema de Custodia BMSC</h3>
+    <span>Bienvenido, {{usuarios.nombre}}</span>
+    <span><a href="{% url 'logout' %}">Logout</a></span>
+
+    <!-- <div class="list-group">
+        <a href="{% url 'empate_index' %}" class="list-group-item list-group-item-action">Empate</a>
+        <a href="{% url 'levantamiento_index' %}" class="list-group-item list-group-item-action">Levantamientos</a>
+        <a href="{% url 'servicios_index' %}" class="list-group-item list-group-item-action">Servicios</a>
+        <a href="{% url 'correspondencia_index' %}" class="list-group-item list-group-item-action">Correspondencia</a>
+        <a href="{% url 'consultas_index' %}" class="list-group-item list-group-item-action">Consultas y Reportes</a>
+        <a href="{% url 'tarea_list' %}" class="list-group-item list-group-item-action">Tareas</a>
+        <a href="{% url 'configuraciones_index' %}" class="list-group-item list-group-item-action">Configuraciones</a>
+        <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action">Dashboard</a>
+    </div> -->
+    <div class = containter>
+        <div class="row mb-12">
+            <div class="col-md-3">
+                <div class="card text-center" style="width: 18rem;">
+                    <img class="card-img-top" src="{% static 'images/imagen-empate.jpg' %}" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="{% url 'empate_index' %}" class="btn btn-primary">Empate</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center" style="width: 18rem;">
+                    <img class="card-img-top" src="{% static 'images/imagen-levantamientos.jpg' %}" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="{% url 'levantamiento_index' %}" class="btn btn-primary">Levantamientos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center" style="width: 18rem;">
+                    <img class="card-img-top" src="{% static 'images/imagen-documentos_sueltos.jpg' %}" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="{% url 'servicios_index' %}" class="btn btn-primary">Servicios</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center" style="width: 18rem;">
+                    <img class="card-img-top" src="{% static 'images/imagen-correspondencia.jpg' %}" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="{% url 'correspondencia_index' %}" class="btn btn-primary">Correspondencia</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-12">
+            <div class="col-md-3">
+                <div class="card text-center" style="width: 18rem;">
+                    <img class="card-img-top" src="{% static 'images/imagen-reportes.jpg' %}" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="{% url 'consultas_index' %}" class="btn btn-primary">Consultas y Reportes</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center" style="width: 18rem;">
+                    <img class="card-img-top" src="{% static 'images/imagen-tareas.jpg' %}" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="{% url 'tarea_list' %}" class="btn btn-primary">Tareas</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center" style="width: 18rem;">
+                    <img class="card-img-top" src="{% static 'images/imagen-configuraciones.jpg' %}" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="{% url 'configuraciones_index' %}" class="btn btn-primary">Configuraciones</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center" style="width: 18rem;">
+                    <img class="card-img-top" src="{% static 'images/imagen-historial.jpg' %}" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="{% url 'historial' %}" class="btn btn-primary">Historial</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+{% else %}
+    <a href="{% url 'login'%}">Login</a>
+{% endif %}

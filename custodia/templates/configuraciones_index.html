@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Configuraciones</li>
+    </ol>
+</nav>
+<div class="list-group">
+    <a href="{% url 'configuraciones_formulario' %}" class="list-group-item list-group-item-action">General</a>
+    <a href="{% url 'tiempos_operaciones' %}" class="list-group-item list-group-item-action">Tiempos de Empate</a>
+
+{% endblock %}

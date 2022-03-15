@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Historial</li>
+    </ol>
+</nav>
+<h1 class="display-6">Historial</h1>
+{% include 'messages.html' %}
+
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i></i></button>
+        </form>
+    </div>
+</div>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Modelo</th>
+            <th>Usuario</th>
+            <th>Acción</th>
+            <th>Fecha</th>
+            <th>Detalle</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in modelo|slice:"50" %}
+        <tr>
+            <td>{{item.content_type.model}}</td>
+            <td>{{item.actor.username}}</td>
+            <td>{{item.get_action_display}}</td>
+            <td>{{item.timestamp|date:'d/m/Y H:i'}}</td>
+            <td>
+                <a href="{% url 'detalle_historial' item.pk %}" class="btn btn-outline-info">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

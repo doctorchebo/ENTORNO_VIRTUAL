@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1 class="display-6">Crear Observación</h1>
+{% include 'messages.html' %}
+<form action="" method='post' id="ObservacionForm" url_sub_categoria="{% url 'cargar_sub_categoria' %}" url_item_observacion="{% url 'cargar_item_observacion' %}" autocomplete='off'>
+    {% csrf_token %}
+        
+        <div class='row mb-12'>
+            <div class='col-md-3'>
+                {{form.destino|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-3'>
+                {{form.categoria|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.sub_categoria|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.observacion|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-10'>
+                {{form.glosa|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.estado|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-12'>
+                {{form.comentarios_custodia|as_crispy_field}}
+            </div> 
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-12'>
+                {{form.comentarios_area_observada|as_crispy_field}}
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle"></i>Registrar</button>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'empate_list' %}" class="btn btn-outline-secondary btn-block ">
+                Volver
+            </a>
+        </div>
+    </div>
+</form>
+{% endblock content %}
+
+
+{% block javascript %}
+<script>
+    $("#id_categoria").change(function () {
+        var url = $("#ObservacionForm").attr("url_sub_categoria");
+        var CategoriaId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'categoria': CategoriaId
+            },
+            success: function (data) {
+                $("#id_sub_categoria").html(data);
+            }
+        });
+
+    });
+</script>
+<script>
+    $("#id_sub_categoria").change(function () {
+        var url = $("#ObservacionForm").attr("url_item_observacion");
+        var SubCategoriaId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'sub_categoria': SubCategoriaId
+            },
+            success: function (data) {
+                $("#id_observacion").html(data);
+            }
+        });
+    });
+</script>
+{% endblock %}
+
+

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Levantamientos</li>
+    </ol>
+</nav>
+<h3>Módulo de Levantamientos</h3>
+<!-- <div class="list-group">
+    <a href="{% url 'contratos_list_levantamiento' %}" class="list-group-item list-group-item-action">Contratos</a>
+    <a href="{% url 'garantias_list_levantamiento' %}" class="list-group-item list-group-item-action">Garantías</a>
+    <a href="{% url 'levantamiento_list' %}" class="list-group-item list-group-item-action">Levantamientos</a>
+    <a href="{% url 'prestamo_index' %}" class="list-group-item list-group-item-action">Préstamos</a>
+    <a href="{% url 'sobre_list' %}" class="list-group-item list-group-item-action">Sobres</a>
+</div>     -->
+
+<div class=containter>
+    <div class="row mb-12">
+        <div class="col-md-3">
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top" src="{% static 'images/imagen-contratos.jpg' %}" alt="Card image cap">
+                <div class="card-body">
+                    <a href="{% url 'contratos_list_levantamiento' %}" class="btn btn-primary">Contratos</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top" src="{% static 'images/imagen-garantias.jpg' %}" alt="Card image cap">
+                <div class="card-body">
+                    <a href="{% url 'garantias_list_levantamiento' %}" class="btn btn-primary">Garantías</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top" src="{% static 'images/imagen-levantamientos.jpg' %}"
+                    alt="Card image cap">
+                <div class="card-body">
+                    <a href="{% url 'levantamiento_list' %}" class="btn btn-primary">Levantamientos</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top" src="{% static 'images/imagen-prestamos.jpg' %}" alt="Card image cap">
+                <div class="card-body">
+                    <a href="{% url 'prestamo_index' %}" class="btn btn-primary">Préstamos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-12">
+        <div class="col-md-3">
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top" src="{% static 'images/imagen-sobre.jpg' %}" alt="Card image cap">
+                <div class="card-body">
+                    <a href="{% url 'sobre_list' %}" class="btn btn-primary">Sobres</a>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

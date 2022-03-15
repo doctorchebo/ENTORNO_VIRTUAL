@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'levantamiento_index' %}">Levantamientos</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Lista de Garantías</li>
+    </ol>
+</nav>
+<h1 class="display-6">Lista de Garantías General</h1>
+{% include 'messages.html' %}
+
+
+<div class="row mb-12">
+    <div class="col-md-6">
+        <a href="{% url 'inmueble_insert_levantamiento' %}" class="btn btn-outline-success">
+            Añadir Inmueble
+        </a>
+    </div>
+    <div class="col-md-6">
+        <a href="{% url 'vehiculo_insert_levantamiento' %}" class="btn btn-outline-success">
+            Añadir Vehiculo
+        </a>
+    </div>
+</div>
+<br>
+<div class = "row mb-12">
+    <div class = "col-md-6">
+        <!-- Filtro inmuebles-->
+        <div class='row mb-12'>
+            <div class='col-md-12'>
+                <form class="d-flex" method=GET action="">
+                    {% csrf_token %}
+                    {{inmueble_filter.form}}
+                    <button type="submit" class="btn btn-info">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <!-- Filtro vehículos-->
+        <div class='row mb-12'>
+            <div class='col-md-12'>
+                <form class="d-flex" method=GET action="">
+                    {% csrf_token %}
+                    {{vehiculo_filter.form}}
+                    <button type="submit" class="btn btn-info">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mb-12">
+    <div class="col-md-6">
+        <!-- Inmuebles -->
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Escritura Pública</th>
+                    <th>Folio</th>
+                    <th>Editar</th>
+                    <th>Borrar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inmueble in inmuebles_list|slice:"100" %}
+                <tr>
+                    <td>{{inmueble.escritura_publica}}</td>
+                    <td>{{inmueble.folio}}</td>
+                    <td>
+                        <a href="{% url 'inmueble_update_levantamiento' inmueble.id %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <form action="{% url 'inmueble_delete_levantamiento' inmueble.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-6">
+        <!-- Vehículos -->
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Crpva</th>
+                    <th>Placa</th>
+                    <th>Editar</th>
+                    <th>Borrar</th>
+                </tr>
+            </thead>
+        
+            <body>
+                {% for vehiculo in vehiculos_list|slice:"100" %}
+                <tr>
+                    <td>{{vehiculo.crpva}}</td>
+                    <td>{{vehiculo.placa}}</td>
+                    <td>
+                        <a href="{% url 'vehiculo_update_levantamiento' vehiculo.id %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <form action="{% url 'vehiculo_delete_levantamiento' vehiculo.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

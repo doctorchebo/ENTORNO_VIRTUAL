@@ -1,0 +1,92 @@
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Inicio</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Empate
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'empate_list' %}">Empate</a>
+                        <a class="dropdown-item" href="{% url 'distribucion_list' %}">Distribución</a>
+                        <a class="dropdown-item" href="{% url 'observacion_list' %}">Observaciones</a>
+                        <a class="dropdown-item" href="{% url 'desembolso_list' %}">Desembolsos</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Levantamientos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'contratos_list_levantamiento' %}">Contratos</a>
+                        <a class="dropdown-item" href="{% url 'garantias_list_levantamiento' %}">Garantías</a>
+                        <a class="dropdown-item" href="{% url 'levantamiento_list' %}">Levantamientos</a>
+                        <a class="dropdown-item" href="{% url 'prestamo_index' %}">Préstamos</a>
+                        <a class="dropdown-item" href="{% url 'sobre_list' %}">Sobres</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Servicios
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'apertura_list' %}">Aperturas</a>
+                        <a class="dropdown-item" href="{% url 'poliza_list' %}">Pólizas</a>
+                        <a class="dropdown-item" href="{% url 'documentos_sueltos_list' %}">Documentos Sueltos</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Resúmenes
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a>
+                        <a class="dropdown-item" href="{% url 'reportes_index' %}">Reportes</a>
+                        <a class="dropdown-item" href="{% url 'hoja_resumen' %}">Hoja Resumen</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'correspondencia_index' %}">Correspondencia</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Opciones
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'tarea_list' %}">Mis Tareas</a>
+                        <a class="dropdown-item" href="{% url 'historial' %}">Historial</a>
+                        <a class="dropdown-item" href="{% url 'configuraciones_index' %}">Configuraciones</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                
+                <!-- <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="">Empates.csv</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Mis tareas</a>
+                </li> -->
+            </ul>
+            <!-- <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> -->
+        </div>
+    </div>
+</nav>
+{% endblock %}

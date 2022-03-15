@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'servicios_index' %}">Servicios</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Lista de Documentos Sueltos</li>
+    </ol>
+</nav>
+<h1 class="display-6">Lista de Documentos Sueltos</h1>
+{% include 'messages.html' %}
+<!-- --------------------- importar archivo --------------------- -->
+<div class="row mb-12">
+    <div class="col-md-2">
+        <a href="{% url 'documento_suelto_insert' %}" class="btn btn-outline-success">
+            Crear Documento Suelto
+        </a>
+    </div>
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="xlsxfile" id="documento">
+            <button type="submit" class="btn btn-outline-success" id="subir_archivo"><i class="fa-solid fa-upload"></i></button>
+        </form>
+    </div>
+</div>
+<!-- ---------------------------------------------------------------->
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Código Cliente</th>
+            <th>Agencia</th>
+            <th>Cliente</th>
+            <th>Operación</th>
+            <th>Estado</th>
+            <th>Caja</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for documento_suelto in documentos_sueltos_list|slice:"100" %}
+        <tr>
+            <td>{{documento_suelto.codigo_cliente}}</td>
+            <td>{{documento_suelto.agencia}}</td>
+            <td>{{documento_suelto.cliente}}</td>
+            <td>{{documento_suelto.operacion}}</td>
+            <td>{{documento_suelto.estado}}</td>
+            <td>{{documento_suelto.caja}}</td>
+            
+            <td>
+                <a href="{% url 'documento_suelto_update' documento_suelto.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <form action="{% url 'documento_suelto_delete' documento_suelto.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
+
+{% block javascript %}
+<script>
+    $(document).ready(function () {
+        $('#subir_archivo').hide();
+    });
+    $('#documento').change(function () {
+        $('#subir_archivo').show();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1 class="display-4">Contratos</h1>
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+    
+    
+    <div class='row mb-10'>
+        <div class='col-md-2'>
+            {{form.onbase|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.codigo_cliente|as_crispy_field}}
+        </div>
+        <div class='col-md-3'>
+            {{form.cliente|as_crispy_field}}
+        </div>
+        <div class='col-md-3'>
+            {{form.tipo|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.sucursal|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-10'>
+        <div class='col-md-2'>
+            {{form.minuta|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.cantidad_minuta|as_crispy_field}}
+        </div>
+        <div class='col-md-3'>
+            {{form.estado_minuta|as_crispy_field}}
+        </div>
+    </div>
+    <form class='row mb-10'>
+        <div class='col-md-2'>
+            {{form.testimonio|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.num_testimonio|as_crispy_field}}
+        </div>
+        <div class='col-md-3'>
+            {{form.reg_testimonio|as_crispy_field}}
+        </div>
+        <div class='col-md-3'>
+            {{form.cantidad_testimonio|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.estado_testimonio|as_crispy_field}}
+        </div>
+        <div class='row mb-10'>
+            <div class='col-md-2'>
+                {{form.contrato_privado|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cantidad_contrato|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.estado_contrato|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-10'>
+            <div class='col-md-2'>
+                {{form.rec_firmas|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.num_rec_firmas|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.reg_rec_firmas|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.cantidad_rec_firmas|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.estado_rec_firmas|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-10'>
+            <div class='col-md-2'>
+                {{form.cert_tdr|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cantidad_cert_tdr|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.estado_cert_tdr|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-10'>
+            <div class='col-md-2'>
+                {{form.cert_desgravamen|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cantidad_cert_desgravamen|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.estado_cert_desgravamen|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-10'>
+            <div class='col-md-2'>
+                {{form.seguro_cesantia|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cantidad_seguro_cesantia|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.estado_seguro_cesantia|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-10'>
+            <div class='col-md-2'>
+                {{form.seguro_dima|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cantidad_seguro_dima|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.estado_seguro_dima|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-10'>
+            <div class='col-md-2'>
+                {{form.anexos_seguros|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-10'>
+            <div class='col-md-2'>
+                {{form.cert_gravamen|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cantidad_cert_gravamen|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.estado_cert_gravamen|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.glosa_cert_gravamen|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.reg_cert_gravamen|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-10'>
+            <div class='col-md-2'>
+                {{form.cert_fundempresa|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cantidad_cert_fundempresa|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.estado_cert_fundempresa|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.glosa_cert_fundempresa|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.reg_cert_fundempresa|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-10'>
+            <div class='col-md-2'>
+                {{form.folio|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cantidad_folio|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.estado_folio|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.glosa_folio|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.reg_folio|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-10'>
+            <div class='col-md-2'>
+                {{form.inf_rapido|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cantidad_inf_rapido|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.estado_inf_rapido|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.glosa_inf_rapido|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.reg_inf_rapido|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-10'>
+            <div class='col-md-2'>
+                {{form.fecha_envio|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.fecha_recepcion|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.analista_legal|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.analista_custodia|as_crispy_field}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success"><i class="fas fa-check-circle"></i>Registrar</button>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'contratos_list' %}" class="btn btn-secondary btn-block btn-lg">
+                    Retornar a lista
+                </a>
+            </div>
+        </div>
+</form>
+    
+{% endblock content %}

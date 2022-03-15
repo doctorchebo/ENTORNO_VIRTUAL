@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'configuraciones_index' %}">Configuraciones</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Consultas</li>
+    </ol>
+</nav>
+<h3>Configuraciones</h3>
+{% include 'messages.html' %}
+<form action="" method='post'>
+    {% csrf_token %}
+    <div class="row md-12">
+        <div class="col-md-2">
+            {{form.caja|as_crispy_field}}
+        </div>
+    </div>
+    <div class="row md-12">
+        <div class="col-md-3">
+            {{form.email_politicas|as_crispy_field}}
+        </div>
+        <div class="col-md-3">
+            {{form.email_liquidaciones|as_crispy_field}}
+        </div>
+        <div class="col-md-3">
+            {{form.email_jefe_custodia|as_crispy_field}}
+        </div>
+    </div>
+    <div class="row md-12">
+        <div class="col-md-3">
+            {{form.email_la_paz|as_crispy_field}}
+        </div>
+        <div class="col-md-3">
+            {{form.email_el_alto|as_crispy_field}}
+        </div>
+        <div class="col-md-3">
+            {{form.email_potosi|as_crispy_field}}
+        </div>
+    </div>
+    <div class="row md-12">
+        <div class="col-md-3">
+            {{form.email_cochabamba|as_crispy_field}}
+        </div>
+        <div class="col-md-3">
+            {{form.email_sucre|as_crispy_field}}
+        </div>
+        <div class="col-md-3">
+            {{form.email_tarija|as_crispy_field}}
+        </div>
+    </div>
+    <div class="row md-12">
+        <div class="col-md-3">
+            {{form.email_pando|as_crispy_field}}
+        </div>
+        <div class="col-md-3">
+            {{form.email_beni|as_crispy_field}}
+        </div>
+        <div class="col-md-3">
+            {{form.email_santa_cruz|as_crispy_field}}
+        </div>
+    </div>
+    <button class="btn btn-outline-success" type="submit">Guardar</button>
+</form>
+{% endblock %}

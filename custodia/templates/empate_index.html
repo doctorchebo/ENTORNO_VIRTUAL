@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Empate</li>
+    </ol>
+</nav>
+<h3>Módulo de Empate</h3>
+
+<div class="list-group">
+    <a href="{% url 'distribucion_list' %}" class="list-group-item list-group-item-action">Distribución</a>
+    <a href="{% url 'empate_list' %}" class="list-group-item list-group-item-action">Empate</a>
+    <a href="{% url 'observacion_list' %}" class="list-group-item list-group-item-action">Observaciones</a>
+    <a href="{% url 'desembolso_list' %}" class="list-group-item list-group-item-action">Desembolsos</a>
+</div>
+
+
+
+{% endblock %}

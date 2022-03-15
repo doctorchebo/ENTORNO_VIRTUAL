@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'empate_index' %}">Empate</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Lista de Observaciones</li>
+    </ol>
+</nav>
+<h1 class="display-6">Mis Observaciones</h1>
+{% include 'messages.html' %}
+<!-- Filtro -->
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Onbase</th>
+            <th>Destino</th>
+            <th>Categoría</th>
+            <th>Sub Categoría</th>
+            <th>Observación</th>
+            <th>Glosa</th>
+            <th>Estado</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for observacion in observacion_list|slice:"100" %}
+        <tr>
+            <td>{{observacion.empate.distribucion.desembolso.onbase}}</td>
+            <td>{{observacion.destino}}</td>
+            <td>{{observacion.categoria.nombre}}</td>
+            <td>{{observacion.sub_categoria.nombre}}</td>
+            <td>{{observacion.observacion.nombre}}</td>
+            <td>{{observacion.glosa}}</td>
+            <td>{{observacion.estado}}</td>
+            <td>
+                <a href="{% url 'observaciones_update' observacion.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <form action="{% url 'observaciones_delete' observacion.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'empate_index' %}">Empate</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Lista de Distribución</li>
+    </ol>
+</nav>
+
+<h1 class="display-6">Mis Distribuciones</h1>
+{% include 'messages.html' %}
+<!-- --------------------- importar archivo --------------------- -->
+<div class="row mb-12">
+    <div class="col-md-2">
+        <a href="{% url 'distribucion_insert' %}" class="btn btn-outline-success">
+            Crear Distribución
+        </a>
+    </div>
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="xlsxfile">
+            <button type="submit" class="btn btn-outline-success"><i class="fa-solid fa-upload"></i></button>
+        </form>
+    </div>
+</div>
+<!-- ---------------------------------------------------------------->
+<!-- Filtro -->
+<h1></h1>
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method=GET action="">
+            {% csrf_token %}
+                {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Onbase</th>
+            <th>Operación</th>
+            <th>Cliente</th>
+            <th>Tipo</th>
+            <th>Analista Asignado</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for distribucion in distribucion_list|slice:"100" %}
+        <tr>
+            <td>{{distribucion.desembolso.onbase}}</td>
+            <td>{{distribucion.desembolso.operacion}}</td>
+            <td>{{distribucion.desembolso.cliente}}</td>
+            <td>{{distribucion.tipo}}</td>
+            <td>{{distribucion.analista_asignado}}</td>
+            <td>
+                <a href="{% url 'distribucion_update' distribucion.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'distribucion_delete' distribucion.id %}" class="btn btn-outline-danger">
+                    <i class="fas fa-trash-can"></i></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

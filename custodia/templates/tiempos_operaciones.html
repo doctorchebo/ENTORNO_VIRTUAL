@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'levantamiento_index' %}">Configuraciones</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Tiempos de Empate</li>
+    </ol>
+</nav>
+<h1 class="display-6">Tiempos Empate</h1>
+{% include 'messages.html' %}
+<div class='row mb-12'>
+    <div class='col-md-2'>
+        <a href="{% url 'tiempos_operaciones_insert' %}" class="btn btn-outline-success">
+            Crear Tipo
+        </a>
+    </div>
+</div>
+<br>
+<!-- <div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div> -->
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Nombre</th>
+            <th>Tiempo (Min.)</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tipo in tipos %}
+        <tr>
+            <td>{{tipo.nombre}}</td>
+            <td>{{tipo.tiempo}}</td>
+            <td>
+                <a href="{% url 'tiempos_operaciones_update' tipo.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <form action="{% url 'tiempos_operaciones_delete' tipo.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

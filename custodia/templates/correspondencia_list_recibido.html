@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'correspondencia_index' %}">Correspondencia</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Recibir Correspondencia</li>
+    </ol>
+</nav>
+<h1 class="display-6">Recepción de Correspondencia</h1>
+{% include 'messages.html' %}
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Código de Barras</th>
+            <th>Descripción</th>
+            <th>Fecha de envío</th>
+            <th>Contenido</th>
+            <th>Estado</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for correspondencia in correspondencia_list|slice:"100" %}
+        <tr>
+            <td>{{correspondencia.codigo_barras}}</td>
+            <td>{{correspondencia.descripcion}}</td>
+            <td>{{correspondencia.fecha_envio|date:'d/m/Y H:i'}}</td>
+            <td>{{correspondencia.contenido}}</td>
+            <td>{{correspondencia.estado}}</td>
+            <td>
+                <a href="{% url 'correspondencia_recibir' correspondencia.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <form action="{% url 'correspondencia_delete' correspondencia.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

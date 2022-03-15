@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="display-4">Listado Ardisa</h1>
+<div class='row mb-12'>
+    <div class='col-md-6'>
+        <form class="d-flex" method=POST action="{% url 'buscar_caja_ardisa' %}">
+            {% csrf_token %}
+            <input type="search" id="form1" placeholder="Caja" class="form-control rounded" name="searched" />
+            <button type="submit" class="btn btn-secondary">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<table class="table table-borderless">
+    <thead>
+        <tr>
+            <td>FISA</td>
+            <td>Onbase</td>
+            <td>Operación</td>
+            <td>Nombre</td>
+            <td>Caja</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in caja %}
+        <tr>
+            <td>{{item.codigo_cliente}}</td>
+            <td>{{item.onbase}}</td>
+            <td>{{item.operacion}}</td>
+            <td>{{item.cliente}}</td>
+            <td>{{item.numero_caja}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<table>
+    <body>
+        <tr>
+            <td>
+                <a href="{% url 'listado_ardisa' caja_reporte %}" class="btn btn-outline-success">
+                    Descargar en CSV
+                </a>
+            </td>
+        </tr>
+    </body>
+</table>
+
+{% endblock content %}

@@ -1,0 +1,54 @@
+{% include 'navbar.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
+    <link href="{% static 'select2/css/select2.min.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}">
+    <style>
+        /* body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: #e0e4e2 !important;
+        } */
+    </style>
+</head>
+
+<body>
+    <div class=" container-fluid">
+        <div class="col-md-12">
+            <div class="jumbo tron">
+                <h1 class="display-4"></h1>
+                <hr class="my-4">
+                {% block navbar %}{% endblock %}
+
+                {% block content %}{% endblock content %}
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'jquery/jquery.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'select2/js/select2.min.js' %}"></script>
+    <script src="{% static 'dash/dash.js' %}"></script>
+    {% block javascript %}{% endblock %}
+    {% block extrahead %}{% endblock %}
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+        });
+    </script>
+    <!-- <script type="text/javascript">
+        $(function(){
+            $('#datepicker').datepicker();  
+        })
+    </script> -->
+</body>
+
+</html>

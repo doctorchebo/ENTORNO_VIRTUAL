@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'empate_index' %}">Empate</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Lista de Desembolsos</li>
+    </ol>
+</nav>
+<h1 class="display-6">Lista de Desembolsos</h1>
+{% include 'messages.html' %}
+<!-- --------------------- importar archivo --------------------- -->
+<div class="row mb-12">
+    <div class="col-md-2">
+        <a href="{% url 'desembolso_insert' %}" class="btn btn-outline-success">
+            Crear Desembolso
+        </a>
+    </div>
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" id = documento name="xlsxfile">
+            <button type="submit" id = subir_archivo class="btn btn-outline-success"><i class="fa-solid fa-upload"></i></button>
+        </form>
+    </div>
+</div>
+<!-- ---------------------------------------------------------------->
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Código Cliente</th>
+            <th>Onbase</th>
+            <th>Operación</th>
+            <th>Nombre</th>
+            <th>Fecha de Desembolso</th>
+            <th>Fecha de Creación</th>
+            <th>Estado</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for desembolso in desembolso_list|slice:"100" %}
+        <tr>
+            <td>{{desembolso.codigo_cliente}}</td>
+            <td>{{desembolso.onbase}}</td>
+            <td>{{desembolso.operacion}}</td>
+            <td>{{desembolso.cliente}}</td>
+            <td>{{desembolso.fecha_desembolso}}</td>
+            <td>{{desembolso.fecha_creacion|date:'d/m/Y H:i'}}</td>
+            <td>{{desembolso.estado}}</td>
+            <td>
+                <a href="{% url 'desembolso_update' desembolso.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <form action="{% url 'desembolso_delete' desembolso.id %}" method="post" class="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<!-- <div class="pagination">
+    <span class="step-links">
+        {% if desembolsos.has_previous %}
+        <a href="?page=1">  &laquo; Primero</a>
+        <a href="?page={{ desembolsos.previous_page_number }}">Anterior</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ desembolsos.number }} of {{ desembolsos.paginator.num_pages }}.
+        </span>
+
+        {% if desembolsos.has_next %}
+        <a href="?page={{ desembolsos.next_page_number }}">Siguiente</a>
+        <a href="?page={{ desembolsos.paginator.num_pages }}">Último &raquo;</a>
+        {% endif %}
+    </span>
+</div> -->
+
+{% endblock content %}
+
+{% block javascript %}
+    <script>
+        $(document).ready(function () {
+                $('#subir_archivo').hide();
+            });
+            $('#documento').change(function(){
+                $('#subir_archivo').show();
+            });
+    </script>
+{% endblock %}

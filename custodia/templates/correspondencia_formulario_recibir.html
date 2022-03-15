@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load user_tags %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1 class="display-6">Recibir Correspondencia</h1>
+{% include 'messages.html' %}
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.codigo_barras|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.usuario_registro|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-6'>
+            {{form.contenido|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-6'>
+            {{form.desembolso|as_crispy_field}}
+        </div>
+        <div class='col-md-6'>
+            {{form.documento_suelto|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.conformidad|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.descripcion|as_crispy_field}}
+        </div>
+    </div>
+    
+    <div class="row mb-12">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success">Recibir</button>  
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'correspondencia_list_recibido' %}" class="btn btn-outline-secondary ">
+                Retornar a lista
+            </a>
+        </div>
+    </div>
+</form>
+
+{% endblock content %}

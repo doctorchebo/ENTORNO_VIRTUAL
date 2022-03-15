@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Consultas</li>
+        
+    </ol>
+</nav>
+<h3>Consultas</h3>
+<div class="list-group">
+    <!-- <a href="{% url 'cajas' %}" class="list-group-item list-group-item-action">Cajas</a> -->
+    <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action">Dashboard</a>
+    <a href="{% url 'reportes_index' %}" class="list-group-item list-group-item-action">Reportes</a>
+    <a href="{% url 'hoja_resumen' %}" class="list-group-item list-group-item-action">Hoja resumen</a>
+</div>    
+
+{% endblock %}

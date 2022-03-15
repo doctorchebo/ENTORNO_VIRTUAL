@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'servicios_index' %}">Servicios</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Lista de Pólizas</li>
+    </ol>
+</nav>
+<h1 class="display-6">Lista de Pólizas</h1>
+{% include 'messages.html' %}
+<!-- --------------------- importar archivo --------------------- -->
+<div class="row mb-12">
+    <div class="col-md-2">
+        <a href="{% url 'poliza_insert' %}" class="btn btn-outline-success">
+            Crear Póliza
+        </a>
+    </div>
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" id="documento" name="xlsxfile">
+            <button type="submit" class="btn btn-outline-success" id="subir_archivo" ><i class="fa-solid fa-upload"></i></button>
+        </form>
+    </div>
+</div>
+<!-- ---------------------------------------------------------------->
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Código Cliente</th>
+            <th>Nombre</th>
+            <th>Póliza</th>
+            <th>Estado</th>
+            <th>Caja</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for poliza in poliza_list|slice:"100" %}
+        <tr>
+            <td>{{poliza.codigo_cliente}}</td>
+            <td>{{poliza.cliente}}</td>
+            <td>{{poliza.poliza}}</td>
+            <td>{{poliza.estado}}</td>
+            <td>{{poliza.caja}}</td>>
+            <td>
+                <a href="{% url 'poliza_update' poliza.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <form action="{% url 'poliza_delete' poliza.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
+
+{% block javascript %}
+<script>
+    $(document).ready(function () {
+        $('#subir_archivo').hide();
+    });
+    $('#documento').change(function () {
+        $('#subir_archivo').show();
+    });
+</script>
+{% endblock %}

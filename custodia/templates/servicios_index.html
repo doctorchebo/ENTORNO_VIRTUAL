@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h3>Módulo de Servicios</h3>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Servicios</li>
+    </ol>
+</nav>
+<div class="list-group">
+    <a href="{% url 'apertura_list' %}" class="list-group-item list-group-item-action">Aperturas</a>
+    <a href="{% url 'poliza_list' %}" class="list-group-item list-group-item-action">Pólizas</a>
+    <a href="{% url 'documentos_sueltos_list' %}" class="list-group-item list-group-item-action">Documentos Sueltos</a>
+</div>    
+
+{% endblock %}

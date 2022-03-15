@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'levantamiento_index' %}">Levantamientos</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Lista de levantamientos</li>
+    </ol>
+</nav>
+<h1 class="display-6">Lista de levantamientos</h1>
+{% include 'messages.html' %}
+<!-- --------------------- importar archivo --------------------- -->
+<div class="row mb-12">
+    <div class="col-md-2">
+        <a href="{% url 'levantamiento_insert' %}" class="btn btn-outline-success">
+            Crear Levantamiento
+        </a>
+    </div>
+</div>
+<br>
+<!-- ---------------------------------------------------------------->
+<!-- Filtro -->
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Fisa</th>
+            <th>Operación</th>
+            <th>Nombre</th>
+            <th>Onbase</th>
+            <th>Estado</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for levantamiento in levantamiento_list|slice:"100" %}
+        <tr>
+            <td>{{levantamiento.codigo_cliente}}</td>
+            <td>{{levantamiento.operacion}}</td>
+            <td>{{levantamiento.cliente}}</td>
+            <td>{{levantamiento.onbase}}</td>
+            <td>{{levantamiento.estado}}</td>
+            <td>
+                <a href="{% url 'levantamiento_update' levantamiento.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <form action="{% url 'levantamiento_delete' levantamiento.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

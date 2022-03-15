@@ -1,0 +1,375 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block extrahead %}
+{{ form.media }}
+{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'empate_index' %}">Empate</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'empate_list' %}">Lista de Empate</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Crear Empate</li>
+    </ol>
+</nav>
+<h1 class="display-6">Empate</h1>
+{% include 'messages.html' %}
+<form action="" method='post' autocomplete='off' id="form_empate_id">
+    {% csrf_token %}
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{caja_form.caja|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                <button type="button" class="btn btn-outline-primary" id="iniciar_empate">Iniciar Empate</button>
+            </div>
+            <h3 class='col-md-2' id="stopwatch">
+                00:00:00
+            </h3>
+        </div>
+        <h3>Información del desembolso</h3>
+        <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value=>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.caja|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{desembolso_form.fecha_desembolso|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{desembolso_form.producto|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{desembolso_form.tipo|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{desembolso_form.codigo_cliente|as_crispy_field}}
+            </div>
+            <div class='col-md-4'>
+                {{desembolso_form.cliente|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{desembolso_form.operacion|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{desembolso_form.monto|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{desembolso_form.onbase|as_crispy_field}}
+            </div>
+            <div class='col-md-4'>
+                {{desembolso_form.ejecutivo|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{desembolso_form.sucursal|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{desembolso_form.agencia|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{desembolso_form.tipo_banca|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{desembolso_form.tipo_trabajo|as_crispy_field}}
+            </div>
+            <div class='col-md-4'>
+                {{desembolso_form.instancia_aprobacion|as_crispy_field}}
+            </div>
+            <div class='col-md-4'>
+                {{desembolso_form.usuario_creacion|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{desembolso_form.desembolso_parcial|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.tipo_operacion|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.onbase_referencia|as_crispy_field}}
+            </div>
+        </div>
+
+        <h3>Documentos de la propuesta</h3>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.propuesta|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.flujo|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.respaldos_ingresos|as_crispy_field}}
+            </div>
+        </div>
+        <h3>Documentos de seguro</h3>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.solicitud_seguro_desgravamen|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.solicitud_seguro_cesantia|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.solicitud_seguro_dima|as_crispy_field}}
+            </div>
+        </div>
+        <h3>Otros documentos</h3>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.formulario_solicitud|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.verif_domiciliaria|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.verif_laboral|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.ddjj_bienes|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.copia_boleta_garantia|as_crispy_field}}
+            </div>
+        </div>
+        <h3>Reportes a la aprobación</h3>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.autorizacion_investigacion|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.segip|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.carnet_identidad|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.cic_cod_con_ext|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cic_cod_sin_ext|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cic_hist_con_ext|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cic_hist_sin_ext|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cic_nombre|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.bi_codigo|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.bi_nombre|as_crispy_field}}
+            </div>
+        </div>
+        <div class=row mb-12>
+            <div class='col-md-2'>
+                {{form.hoja_riesgos|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.atencion_preferente|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.lista_confidencial|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.retenciones_judiciales|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cliente_pleno_oportuno_pago|as_crispy_field}}
+            </div>
+        </div>
+        <h3>Reportes al desembolso</h3>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.cic_cod_con_ext_desembolso|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cic_cod_sin_ext_desembolso|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.cic_nombre_desembolso|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.bi_codigo_desembolso|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.bi_nombre_desembolso|as_crispy_field}}
+            </div>
+        </div>
+        <h3>Documentos de Liquidaciones</h3>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.nota_credito|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.plan_pagos|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.empatado|as_crispy_field}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-outline-success" id="registrar_empate_id" >Registrar</button>
+            </div>
+            <div class="col-md-2">
+                <a href="{% url 'observaciones_insert' form.instance.pk desembolso_form.instance.pk %}" class="btn btn-outline-secondary">
+                    Añadir Observación
+                </a>
+            </div>
+            <div class="col-md-2">
+                <a href="{% url 'empate_list' %}" class="btn btn-outline-secondary">
+                    Retornar a lista
+                </a>
+            </div>
+        </div>
+</form>
+
+{% endblock content %}
+
+{% block javascript %}
+    <script>
+        var start_date;
+        var end_date;
+        var tiempo;
+
+        function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        const csrftoken = getCookie('csrftoken');
+        
+        const timer = document.getElementById('stopwatch');
+        var hr = 0;
+        var min = 0;
+        var sec = 0;
+        var stoptime = true;
+    
+    
+        $('#iniciar_empate').click(function () {
+        start_date = Date.now();
+        console.log('inicio ', start_date);
+        
+        if (stoptime == true) {
+                stoptime = false;
+                timerCycle();
+            }
+
+        alert("Contador iniciado")    
+        });
+
+        $('#id_empatado').change(function () {
+            if ($('#id_empatado').is(':checked')){
+                
+                end_date = Date.now();
+                
+                console.log('Fin ' + end_date)
+                console.log('Tiempo ' + (end_date - start_date));
+                
+                tiempo = end_date - start_date
+                tiempo_segundos = tiempo/1000
+                
+                if (stoptime == false) {
+                    stoptime = true;
+                    resetTimer();
+                }
+                alert("Empatado en " + tiempo_segundos + " " + "segundos")
+
+                $.ajax({
+                    url: "{% url 'tiempo_empate' form.instance.id %}",
+                    method: 'POST',
+                    data: {
+                        'tiempo': tiempo,
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    },
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
+            }
+        });
+
+    function timerCycle() {
+            if (stoptime == false) {
+                sec = parseInt(sec);
+                min = parseInt(min);
+                hr = parseInt(hr);
+
+                sec = sec + 1;
+
+                if (sec == 60) {
+                    min = min + 1;
+                    sec = 0;
+                }
+                if (min == 60) {
+                    hr = hr + 1;
+                    min = 0;
+                    sec = 0;
+                }
+
+                if (sec < 10 || sec == 0) {
+                    sec = '0' + sec;
+                }
+                if (min < 10 || min == 0) {
+                    min = '0' + min;
+                }
+                if (hr < 10 || hr == 0) {
+                    hr = '0' + hr;
+                }
+
+                timer.innerHTML = hr + ':' + min + ':' + sec;
+
+                setTimeout("timerCycle()", 1000);
+            }
+        }
+
+        function resetTimer() {
+            timer.innerHTML = "00:00:00";
+            stoptime = true;
+            hr = 0;
+            sec = 0;
+            min = 0;
+        }
+    </script>
+{% endblock %}
+

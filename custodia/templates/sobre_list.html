@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'levantamiento_index' %}">Levantamientos</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Lista de Sobres</li>
+    </ol>
+</nav>
+<h1 class="display-6">Lista de sobres</h1>
+{% include 'messages.html' %}
+<div class='row mb-12'>
+    <div class='col-md-2'>
+        <a href="{% url 'sobre_insert' %}" class="btn btn-outline-success">
+            Crear Sobre
+        </a>
+    </div>
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" id=documento name="xlsxfile">
+            <button type="submit" id=subir_archivo class="btn btn-outline-success"><i
+                    class="fa-solid fa-upload"></i></button>
+        </form>
+    </div>
+</div>
+<br>
+<div class='row mb-12'>
+    <div class='col-md-12'>
+        <form class="d-flex" method="get" action="">
+            {{filter.form}}
+            <button type="submit" class="btn btn-info">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Ubicación</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sobre in sobre_list|slice:"100" %}
+        <tr>
+            <td>{{sobre.codigo}}</td>
+            <td>{{sobre.nombre}}</td>
+            <td>{{sobre.estado}}</td>
+            <td>{{sobre.ubicacion}}</td>
+            <td>
+                <a href="{% url 'sobre_update' sobre.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <form action="{% url 'sobre_delete' sobre.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
+
+{% block javascript %}
+<script>
+    $(document).ready(function () {
+        $('#subir_archivo').hide();
+    });
+    $('#documento').change(function () {
+        $('#subir_archivo').show();
+    });
+</script>
+{% endblock %}

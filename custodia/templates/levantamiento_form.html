@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% if levantamiento_id == 0 %}
+<h1 class="display-6">Crear levantamiento</h1>
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+        <div class='row mb-12'>
+            <div class='col-md-10'>
+                {{form.desembolso|as_crispy_field}}
+            </div>
+        </div>
+        <h3>Datos del desembolso (opcional)</h3>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.sucursal|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.codigo_cliente|as_crispy_field}}
+            </div>
+            <div class='col-md-3'>
+                {{form.cliente|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.onbase|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.operacion|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.tipo|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.fecha_ingreso|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.referencia_legal|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-10'>
+                {{form.descripcion|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.analista|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.solicitante|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.enviado_a|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.fecha_entrega|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.fecha_devolucion|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-10'>
+                {{form.observaciones|as_crispy_field}}
+            </div>
+        </div>
+        <div class='row mb-12'>
+            <div class='col-md-2'>
+                {{form.caja|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.carpeta|as_crispy_field}}
+            </div>
+            <div class='col-md-2'>
+                {{form.estado|as_crispy_field}}
+            </div>
+        </div>
+        
+          
+    <div class="row">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success">Registrar</button>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'levantamiento_list'%}" class="btn btn-outline-secondary ">
+                Retornar a lista
+            </a>
+        </div>
+    </div>
+</form>
+<!-- ------------------------------------------editar------------------------------------- -->
+{% else %}
+<h1 class="display-6">Editar levantamiento</h1>
+<form action="" method='post' autocomplete='off'>
+    {% csrf_token %}
+    <div class='row mb-12'>
+        <div class='col-md-6'>
+            {{form.desembolso|as_crispy_field}}
+        </div>
+    </div>
+    <h3>Datos del desembolso (Manual)</h3>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.sucursal|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.codigo_cliente|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.cliente|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.onbase|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.operacion|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.tipo|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.fecha_ingreso|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.referencia_legal|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.descripcion|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.analista|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.solicitante|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.enviado_a|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.fecha_entrega|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.fecha_devolucion|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-10'>
+            {{form.observaciones|as_crispy_field}}
+        </div>
+    </div>
+    <div class='row mb-12'>
+        <div class='col-md-2'>
+            {{form.caja|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.carpeta|as_crispy_field}}
+        </div>
+        <div class='col-md-2'>
+            {{form.estado|as_crispy_field}}
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-success">Registrar</button>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'levantamiento_list'%}" class="btn btn-outline-secondary ">
+                Retornar a lista
+            </a>
+        </div>
+    </div>
+</form>
+{% endif %}
+{% endblock content %}

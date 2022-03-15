@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Historial</li>
+    </ol>
+</nav>
+<h1 class="display-6">Detalle Historial</h1>
+{% include 'messages.html' %}
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Campo</th>
+                    <th>Inicial</th>
+                    <th>Final</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in log.changes_dict.items %}
+                <tr>
+                    {% if value.0 != value.1 %}
+                    <td>{{key}}</td>
+                    <td>{{value.0|default:""}}</td>
+                    <td>{{value.1|default:""}}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="row-md-12">
+            <div class="col-md-2">
+                <a href="{% url 'historial' %}" class="btn btn-outline-secondary">
+                    Retornar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
