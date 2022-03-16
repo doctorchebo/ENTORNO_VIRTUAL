@@ -74,6 +74,7 @@ django-dbbackup = "*"
 gunicorn = "*"
 dj-database-url = "*"
 setuptools = "*"
+django-redis = "*"
 
 [dev-packages]
 pytest = "*"

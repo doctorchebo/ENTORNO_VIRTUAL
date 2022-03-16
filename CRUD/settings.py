@@ -112,12 +112,15 @@ if DEBUG:
     }
 else:
     CACHES = {
-        'default': {
-            'BACKEND':'django.core.cache.backends.redis.RedisCache',
-            'LOCATION': REDIS_URL,
-            'TIMEOUT': 5*60,
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_URL,
+        "TIMEOUT":5*60,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     }
+}
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
