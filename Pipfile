@@ -73,6 +73,7 @@ django-celery-beat = "*"
 django-dbbackup = "*"
 gunicorn = "*"
 dj-database-url = "*"
+setuptools = "*"
 
 [dev-packages]
 pytest = "*"
