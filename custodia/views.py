@@ -115,7 +115,7 @@ def desembolso_list(request):
     elif request.method=='POST':
         desembolso_resource = DesembolsosResource()  
         dataset = Dataset()  
-        #print(dataset)  
+        # print(dataset)  
         nuevos_desembosos = request.FILES['xlsxfile']  
         # print(nuevos_desembosos)  
         dataset.load(nuevos_desembosos)  

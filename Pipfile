@@ -72,6 +72,7 @@ flower = "*"
 django-celery-beat = "*"
 django-dbbackup = "*"
 gunicorn = "*"
+dj-database-url = "*"
 
 [dev-packages]
 pytest = "*"

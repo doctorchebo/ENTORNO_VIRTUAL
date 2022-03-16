@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import dj_database_url
 from celery.schedules import crontab
 from decouple import config
 from pathlib import Path
@@ -32,12 +33,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+if settings.DEBUG:
+    SECRET_KEY = config('SECRET_KEY')
+else:
+    SECRET_KET = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool, default=True)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost'] 
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'custodia-bmsc.herokuapp.com'] 
 
 
 # Application definition
@@ -72,8 +76,17 @@ INSTALLED_APPS = [
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR / 'backup'}
 
+# REDIS URL
+if setting.DEBUG == False:
+    REDIS_URL = os.environ['REDIS_URL']
+
 # CELERY SETTINGS
-CELERY_BROKER_URL = 'redis://localhost:6379/1'
+if settings.DEBUG:
+    CELERY_BROKER_URL = 'redis://localhost:6379/1'
+else:
+    CELERY_BROKER_URL = REDIS_URL
+
+
 CELERY_TIMEZONE = 'America/Santo_Domingo'
 CELERY_BEAT_SCHEDULE = {
     'run-every-monday': {
@@ -88,12 +101,21 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-        'LOCATION': '127.0.0.1:11211',
+if settings.DEBUG:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+            'LOCATION': '127.0.0.1:11211',
+        }
     }
-}
+else:
+    CACHES = {
+        'default': {
+            'BACKEND':'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': REDIS_URL,
+            'TIMEOUT': 5*60,
+        }
+    }
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -155,17 +177,21 @@ WSGI_APPLICATION = 'CRUD.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'custodia',
-        'USER': 'root',
-        'PASSWORD': config('BD_PASSWORD'),
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+if settings.DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql', 
+            'NAME': 'custodia',
+            'USER': 'root',
+            'PASSWORD': config('BD_PASSWORD'),
+            'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+            'PORT': '3306',
+        }
     }
-}
-
+else:
+    DATABASES = {
+        'default': dj_database_url.config()
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -222,13 +248,19 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'marcelo.munoz.coaquira@gmail.com'
-EMAIL_HOST_PASSWORD = 'fvgbcpdurevgykwe'
-EMAIL_PORT = '587'
+if settings.DEBUG:
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = 'marcelo.munoz.coaquira@gmail.com'
+    EMAIL_HOST_PASSWORD = 'fvgbcpdurevgykwe'
+    EMAIL_PORT = '587'
 # DEFAULT_FROM_EMAIL = 'custodia@bmsc.com'
-EMAIL_USE_TLS =True
-EMAIL_USE_SSL = False
+    EMAIL_USE_TLS =True
+    EMAIL_USE_SSL = False
+else:
+    EMAIL_HOST = os.environ[MAILGUN_SMTP_SERVER]
+    EMAIL_HOST_USER = os.environ[MAILGUN_SMTP_LOGIN]
+    EMAIL_HOST_PASSWORD = os.environ[MAILGUN_SMTP_PASSWORD]
+    EMAIL_PORT = os.environ[MAILGUN_SMTP_PORT]
 
 #IMPORT-EXPORT CONFIG
 IMPORT_EXPORT_USE_TRANSACTIONS = True
