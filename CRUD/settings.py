@@ -33,7 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-if settings.DEBUG:
+if DEBUG:
     SECRET_KEY = config('SECRET_KEY')
 else:
     SECRET_KET = os.environ['SECRET_KEY']
@@ -84,7 +84,7 @@ if setting.DEBUG == False:
     REDIS_URL = os.environ['REDIS_URL']
 
 # CELERY SETTINGS
-if settings.DEBUG:
+if DEBUG:
     CELERY_BROKER_URL = 'redis://localhost:6379/1'
 else:
     CELERY_BROKER_URL = REDIS_URL
@@ -104,7 +104,7 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-if settings.DEBUG:
+if DEBUG:
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
@@ -180,7 +180,7 @@ WSGI_APPLICATION = 'CRUD.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if settings.DEBUG:
+if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql', 
@@ -233,7 +233,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-if settings.DEBUG == False:
+if DEBUG == False:
     STATIC_ROOT = os.path.join(BASE_DIR,'static') 
 
 MEDIA_URL = '/media/'
@@ -252,7 +252,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-if settings.DEBUG:
+if DEBUG:
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = 'marcelo.munoz.coaquira@gmail.com'
     EMAIL_HOST_PASSWORD = 'fvgbcpdurevgykwe'
