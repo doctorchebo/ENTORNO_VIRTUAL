@@ -28,11 +28,12 @@ MESSAGE_TAGS = {
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+DEBUG = False
+
 if DEBUG:
     SECRET_KEY = config('SECRET_KEY')
 else:
@@ -42,10 +43,8 @@ else:
 # if setting.DEBUG:
 #     DEBUG = config('DEBUG', cast=bool, default=True)
 # else:
-DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'custodia-bmsc.herokuapp.com'] 
-
 
 # Application definition
 
@@ -80,7 +79,7 @@ DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR / 'backup'}
 
 # REDIS URL
-if setting.DEBUG == False:
+if DEBUG == False:
     REDIS_URL = os.environ['REDIS_URL']
 
 # CELERY SETTINGS
