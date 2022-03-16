@@ -37,7 +37,7 @@ DEBUG = False
 if DEBUG:
     SECRET_KEY = config('SECRET_KEY')
 else:
-    SECRET_KET = os.environ['SECRET_KEY']
+    SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # if setting.DEBUG:
