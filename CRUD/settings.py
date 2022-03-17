@@ -32,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     SECRET_KEY = config('SECRET_KEY')
@@ -267,6 +267,7 @@ else:
     EMAIL_HOST_USER = os.environ['MAILGUN_SMTP_LOGIN']
     EMAIL_HOST_PASSWORD = os.environ['MAILGUN_SMTP_PASSWORD']
     EMAIL_PORT = os.environ['MAILGUN_SMTP_PORT']
+    EMAIL_USE_TLS = True
 
 #IMPORT-EXPORT CONFIG
 IMPORT_EXPORT_USE_TRANSACTIONS = True
