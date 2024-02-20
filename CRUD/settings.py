@@ -9,13 +9,12 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
 import os
 import dj_database_url
 from celery.schedules import crontab
 from decouple import config
 from pathlib import Path
-from django.contrib.messages import constants as messages
+from django.contrib import messages
 
 MESSAGE_TAGS = {
         messages.DEBUG: 'alert-secondary',
@@ -32,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     SECRET_KEY = config('SECRET_KEY')
@@ -252,13 +251,11 @@ if DEBUG:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 if DEBUG:
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = 'marcelo.munoz.coaquira@gmail.com'
-    EMAIL_HOST_PASSWORD = 'fvgbcpdurevgykwe'
-    EMAIL_PORT = '587'
-# DEFAULT_FROM_EMAIL = 'custodia@bmsc.com'
+    EMAIL_HOST = os.environ['MAILGUN_SMTP_SERVER_DEBUG']
+    EMAIL_HOST_USER = os.environ['MAILGUN_SMTP_LOGIN_DEBUG']
+    EMAIL_HOST_PASSWORD = os.environ['MAILGUN_SMTP_PASSWORD_DEBUG']
+    EMAIL_PORT = os.environ['MAILGUN_SMTP_PORT_DEBUG']
     EMAIL_USE_TLS =True
     EMAIL_USE_SSL = False
 else:
