@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('custodia', '0017_auto_20220224_1137'),
+        ("custodia", "0017_auto_20220224_1137"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='sobre',
-            name='codigo',
-            field=models.PositiveBigIntegerField(),
+            model_name="sobre",
+            name="codigo",
+            field=models.PositiveIntegerField(),
         ),
     ]

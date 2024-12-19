@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('custodia', '0010_alter_apertura_codigo_cliente'),
+        ("custodia", "0010_alter_apertura_codigo_cliente"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='poliza',
-            name='bloque',
-            field=models.PositiveBigIntegerField(null=True),
+            model_name="poliza",
+            name="bloque",
+            field=models.PositiveIntegerField(null=True),
         ),
     ]
