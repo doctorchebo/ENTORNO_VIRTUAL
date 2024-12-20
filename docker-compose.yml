@@ -3,12 +3,12 @@ version: "3.8"
 services:
   web:
     container_name: dms
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: gunicorn --bind 0.0.0.0:8000 CRUD.wsgi:application
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    # command: gunicorn --bind 0.0.0.0:8000 CRUD.wsgi:application
+    image: doctorchebo/dms:latest
     volumes:
-      - .:/app
       - static_volume:/app/static
       - media_volume:/app/media
     env_file:
@@ -38,7 +38,7 @@ services:
     image: nginx:alpine
     container_name: nginx-container
     ports:
-      - "81:80"
+      - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - static_volume:/app/static
