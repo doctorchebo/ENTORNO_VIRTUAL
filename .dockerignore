@@ -1,0 +1,9 @@
+docker-compose.yml
+.venv/
+**.env
+.env
+**__pycache__/
+__pycache__/
+*.pyc
+celerybeat-schedule
+db_data_only.sql

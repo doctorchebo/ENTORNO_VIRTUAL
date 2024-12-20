@@ -46,7 +46,12 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 #     DEBUG = config('DEBUG', cast=bool, default=True)
 # else:
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "custodia-bmsc.herokuapp.com"]
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:81"]
 
 # Application definition
 
@@ -217,7 +222,8 @@ if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+if not DEBUG:
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 if DEBUG:
     STATICFILES_DIRS = [
