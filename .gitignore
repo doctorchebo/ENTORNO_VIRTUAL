@@ -1,7 +1,6 @@
 .env
-.venv
+.venv/
 *.pyc
 __pycache__
-custodia.sql
-custodia - heroku.sql
 /static/*
+db_data_only.sql
